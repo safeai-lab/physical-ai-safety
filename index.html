@@ -3,9 +3,661 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Physical AI Safety</title>
+  <title>Physical AI Safety — The Book and CMU Course by Ding Zhao</title>
+  <meta name="description" content="Physical AI Safety: The Gateway to Deploying AI in the Real World. A graduate textbook and CMU course by Ding Zhao on robustness, generalization, constraint safety, foundation model safety, rare-event certification, and regulation of AI systems that act in the physical world.">
+  <meta property="og:title" content="Physical AI Safety">
+  <meta property="og:description" content="The book and CMU course by Ding Zhao — mathematical tools that treat uncertainty, distribution shift, constraint violation, and rare failure as first-class objects.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-  Physical AI Safety
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top">Physical AI Safety</a>
+    <nav class="topnav" aria-label="Sections">
+      <a href="#book">The Book</a>
+      <a href="#chapters">Chapters</a>
+      <a href="#course">Course</a>
+      <a href="#materials">Materials</a>
+      <a href="#cite">Cite</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ Hero ============ -->
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">The Book and CMU Course by <strong>Ding Zhao</strong></p>
+      <h1>Artificial intelligence is leaving <em>the screen.</em></h1>
+      <p class="booktitle"><strong>Physical AI Safety</strong> —
+        <span class="subtitle">The Gateway to Deploying AI in the Real World</span></p>
+      <p class="pitch">
+        When a model errs in the physical world, the cost is not a poor recommendation
+        but a damaged machine, a missed diagnosis, or a human life. This book develops,
+        in one coherent treatment, the mathematical tools that treat uncertainty,
+        distribution shift, constraint violation, and rare failure as first-class
+        objects of study — closing the gap between what AI can demonstrate and what
+        it can be trusted to do.
+      </p>
+      <div class="objects" aria-label="The three mathematical objects of a physical AI system">
+        <span class="obj o-env"><b>p</b>(s<sub>t+1</sub> | s<sub>t</sub>, a<sub>t</sub>)&nbsp; the environment</span>
+        <span class="times">×</span>
+        <span class="obj o-pol"><b>π</b>(a<sub>t</sub> | s<sub>t</sub>)&nbsp; the policy</span>
+        <span class="times">×</span>
+        <span class="obj o-eval"><b>E</b>[Σ r]&nbsp; the human criterion</span>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#materials" aria-disabled="true">Download the Book — coming soon</a>
+        <a class="btn btn-ghost" href="#course">Watch the Course</a>
+        <a class="btn btn-ghost" href="#materials">Slides, Exercises &amp; Code</a>
+      </div>
+      <p class="version-note">
+        <span class="dot">●</span> Summer 2026 Course Edition — in preparation.
+        The free PDF will be posted here as the CMU course runs.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ Stats ============ -->
+  <section class="stats" aria-label="Book at a glance">
+    <div class="wrap">
+      <div class="stat"><div class="n">7</div><div class="l">Chapters</div></div>
+      <div class="stat"><div class="n">465</div><div class="l">Pages (working draft)</div></div>
+      <div class="stat"><div class="n">68</div><div class="l">Exercises, all with solutions</div></div>
+      <div class="stat"><div class="n">691</div><div class="l">References</div></div>
+    </div>
+  </section>
+
+  <!-- ============ About ============ -->
+  <section class="block" id="book">
+    <div class="wrap">
+      <p class="sec-eyebrow">The Book</p>
+      <h2>Closing the deployment gap</h2>
+      <p class="lead">
+        Self-driving cars, surgical assistants, warehouse fleets, home and factory
+        robots: AI is moving from ranking and recommending into sensing, deciding,
+        and acting. Yet there is a persistent gap between what AI can demonstrate
+        and what it can be trusted to do. Closing it is not a matter of adding a
+        safety checklist at the end of development — it requires mathematics that
+        makes failure itself the object of study.
+      </p>
+      <div class="two-col">
+        <div>
+          <h3>One framework, seven chapters</h3>
+          <p>
+            A physical AI system involves three mathematical objects: an environment
+            model, a policy, and a human evaluation criterion. Each chapter studies a
+            property of one object or an interaction of two — from robustness under
+            bounded perturbation, through generalization under distribution shift and
+            constraint safety, to certifying failure rates too rare to ever observe
+            and the standards and regulation that authorize deployment.
+          </p>
+          <h3>A running case study</h3>
+          <p>
+            A hospital mobile manipulator threads through every chapter: the same
+            robot that must be robust to a spoofed sensor in Chapter 2 must be
+            certified against one-in-a-billion failures in Chapter 6, and enter a
+            deployment dossier in Chapter 7.
+          </p>
+        </div>
+        <div>
+          <h3>Who it is for</h3>
+          <p>
+            Graduate students and practicing engineers who build, evaluate, or
+            certify learning-based systems for physical deployment. The book is
+            self-contained for a one-semester course, with tailored reading paths
+            for machine-learning, robotics and control, and safety-and-regulation
+            readers. Prerequisites are deliberately modest: graduate-level
+            probability, linear algebra, and basic machine learning — Chapter 1
+            supplies the rest.
+          </p>
+          <h3>Exercises throughout</h3>
+          <p>
+            Every chapter ends with exercises tagged by type — derivation,
+            conceptual, implementation, design — and by difficulty. All 68 have
+            worked solutions; an instructor's solutions manual accompanies
+            the course materials.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Chapters ============ -->
+  <section class="block" id="chapters">
+    <div class="wrap">
+      <p class="sec-eyebrow">Contents</p>
+      <h2>Seven chapters, one argument</h2>
+      <p class="lead">Expand a chapter for its scope, section list, and the methods it develops.</p>
+
+      <div class="toc">
+
+        <details class="ch">
+          <summary>
+            <span class="ch-num">1</span>
+            <span class="ch-title">Mathematical Foundations</span>
+            <span class="ch-leader"></span>
+            <span class="ch-meta">10 exercises</span>
+            <span class="ch-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="ch-body">
+            <p class="ch-hook">The mathematical toolkit behind every physical AI system, from deep networks and backpropagation to reinforcement learning and calibrated uncertainty.</p>
+            <p class="ch-sum">
+              Defines physical AI — systems that sense, decide, and act in the physical
+              world — and what makes its safety problem distinctive: irreversible actions,
+              rare but consequential events, distribution drift, partial observability,
+              and real-time decisions. Builds the supervised learning toolkit for
+              perception, then the sequential decision-making toolkit from imitation
+              learning to Markov Decision Processes and reinforcement learning, closing
+              with uncertainty quantification and calibration.
+            </p>
+            <div class="ch-cols">
+              <div>
+                <h4>Sections</h4>
+                <ol>
+                  <li>Physical AI and Its Safety Challenges</li>
+                  <li>Deep Learning Essentials</li>
+                  <li>Sequential Decision-Making</li>
+                  <li>Uncertainty Quantification and Calibration</li>
+                </ol>
+              </div>
+              <div>
+                <h4>Key methods</h4>
+                <div class="tags">
+                  <span class="tag">backpropagation &amp; SGD</span>
+                  <span class="tag">imitation learning</span>
+                  <span class="tag">Markov Decision Processes</span>
+                  <span class="tag">value &amp; policy methods</span>
+                  <span class="tag">Bayesian filtering</span>
+                  <span class="tag">model-based planning</span>
+                  <span class="tag">calibration</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="ch">
+          <summary>
+            <span class="ch-num">2</span>
+            <span class="ch-title">Robustness</span>
+            <span class="ch-leader"></span>
+            <span class="ch-meta">11 exercises</span>
+            <span class="ch-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="ch-body">
+            <p class="ch-hook">How adversaries attack physical AI, from imperceptible pixels to laser-spoofed LiDAR — and the certified defenses that hold the line under the worst case.</p>
+            <p class="ch-sum">
+              Robustness is a system's ability to hold acceptable performance under
+              worst-case disturbances within a stated budget. The chapter builds a
+              taxonomy of robustness notions and threat models, covers attacks from
+              digital and physically realizable evasion to poisoning and supply-chain
+              compromise, then develops the defenses — adversarial training, randomized
+              smoothing, deterministic verification, robust MDPs — all cast as a common
+              maximin problem, ending with robustness in physical sensing.
+            </p>
+            <div class="ch-cols">
+              <div>
+                <h4>Sections</h4>
+                <ol>
+                  <li>A Taxonomy of Robustness</li>
+                  <li>Adversarial Attacks</li>
+                  <li>Enhancement of Robustness</li>
+                  <li>Robustness in Physical Sensing</li>
+                </ol>
+              </div>
+              <div>
+                <h4>Key methods</h4>
+                <div class="tags">
+                  <span class="tag">FGSM &amp; PGD</span>
+                  <span class="tag">physically realizable attacks</span>
+                  <span class="tag">data poisoning &amp; backdoors</span>
+                  <span class="tag">adversarial training</span>
+                  <span class="tag">randomized smoothing</span>
+                  <span class="tag">verification (IBP, CROWN)</span>
+                  <span class="tag">distributionally robust MDPs</span>
+                  <span class="tag">sensor fusion</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="ch">
+          <summary>
+            <span class="ch-num">3</span>
+            <span class="ch-title">Generalization</span>
+            <span class="ch-leader"></span>
+            <span class="ch-meta">8 exercises</span>
+            <span class="ch-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="ch-body">
+            <p class="ch-hook">When the world shifts out from under a trained agent: measure how far it moved with optimal transport, and adapt with causality, meta-learning, and sim-to-real transfer.</p>
+            <p class="ch-sum">
+              Generalization safety is the risk that an agent trained on one task
+              distribution fails on another — a larger regime of shift than the bounded
+              perturbations of robustness. The chapter formalizes tasks with the
+              contextual MDP, introduces a four-way taxonomy of distribution shifts,
+              uses optimal transport to measure task distance and bound target risk,
+              and develops adaptation three ways: freeze-and-add continual learning,
+              restrict-to-invariant causal features, and learn-to-adapt meta-learning —
+              then applies it all to sim-to-real transfer and online task identification.
+            </p>
+            <div class="ch-cols">
+              <div>
+                <h4>Sections</h4>
+                <ol>
+                  <li>Formulation of the Generalization Problem</li>
+                  <li>Measuring Task Shift with Optimal Transport</li>
+                  <li>Continual Learning: Adapters and Symmetries</li>
+                  <li>Generalization through Causality</li>
+                  <li>Learning to Adapt: Meta-Learning and Prompts</li>
+                  <li>Sim-to-Real Transfer</li>
+                  <li>Task Identification and Robustness to Task Uncertainty</li>
+                </ol>
+              </div>
+              <div>
+                <h4>Key methods</h4>
+                <div class="tags">
+                  <span class="tag">contextual MDP</span>
+                  <span class="tag">Wasserstein distance</span>
+                  <span class="tag">Sinkhorn algorithm</span>
+                  <span class="tag">adapters &amp; group symmetries</span>
+                  <span class="tag">structural causal models</span>
+                  <span class="tag">MAML &amp; Prompt-DT</span>
+                  <span class="tag">domain randomization</span>
+                  <span class="tag">Dirichlet process clustering</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="ch">
+          <summary>
+            <span class="ch-num">4</span>
+            <span class="ch-title">Constraint Safety</span>
+            <span class="ch-leader"></span>
+            <span class="ch-meta">10 exercises</span>
+            <span class="ch-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="ch-body">
+            <p class="ch-hook">From CMDPs to control barrier functions — training policies that respect safety budgets, then guarding them at runtime so "safe on average" becomes "safe on this trajectory."</p>
+            <p class="ch-sum">
+              Formulates safety as explicit constraints in sequential decision making
+              via the constrained Markov Decision Process, and develops the methods that
+              solve it online and from offline data: Lagrangian duality, trust regions,
+              inference-based methods, and offline pessimism. The heart of the chapter
+              is a deployment architecture that converts expectation-level training
+              bounds into state-wise runtime safety via control-theoretic filters and
+              run-time assurance — the learned policy proposes, the guard disposes.
+            </p>
+            <div class="ch-cols">
+              <div>
+                <h4>Sections</h4>
+                <ol>
+                  <li>Formulation of Constraint Safety</li>
+                  <li>Primal–Dual and Trust-Region Methods</li>
+                  <li>Constrained Learning as Inference</li>
+                  <li>Constrained Learning from Offline Data</li>
+                  <li>Robustness and Adaptability of Constraint Safety</li>
+                  <li>Runtime Safety: Control-Theoretic Approaches</li>
+                </ol>
+              </div>
+              <div>
+                <h4>Key methods</h4>
+                <div class="tags">
+                  <span class="tag">constrained MDPs</span>
+                  <span class="tag">PID-Lagrangian methods</span>
+                  <span class="tag">constrained policy optimization</span>
+                  <span class="tag">offline safe RL</span>
+                  <span class="tag">control barrier functions</span>
+                  <span class="tag">Hamilton–Jacobi reachability</span>
+                  <span class="tag">Simplex / run-time assurance</span>
+                  <span class="tag">OOD monitoring</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="ch">
+          <summary>
+            <span class="ch-num">5</span>
+            <span class="ch-title">Foundation Model Safety</span>
+            <span class="ch-leader"></span>
+            <span class="ch-meta">9 exercises</span>
+            <span class="ch-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="ch-body">
+            <p class="ch-hook">When a generalist model drives a real actuator: dissecting vision-language-action failure modes and layering test environments, alignment, and runtime guardrails to contain them.</p>
+            <p class="ch-sum">
+              Examines foundation models as physical controllers — vision-language-action
+              models that map camera images and language instructions to motor commands —
+              and their failure channels: perception hallucination, instruction
+              misinterpretation, embodiment distribution shift, and adversarial scene
+              injection. Builds a four-component vocabulary for generative world models
+              used as test environments, develops the mathematics of alignment
+              fine-tuning from RLHF to DPO and verifiable rewards, and closes with
+              layered runtime guardrails, principled deference, and what red-teaming
+              evidence actually establishes for a safety case.
+            </p>
+            <div class="ch-cols">
+              <div>
+                <h4>Sections</h4>
+                <ol>
+                  <li>Foundation Models as Physical Controllers</li>
+                  <li>Vision-Language-Action Architectures and Failure Modes</li>
+                  <li>Anatomy of Generative World Models</li>
+                  <li>World Models as Test Environments</li>
+                  <li>Alignment and Preference Optimization for Action Policies</li>
+                  <li>Runtime Guardrails and Deference</li>
+                  <li>Evaluation, Red Teaming, and Evidence</li>
+                </ol>
+              </div>
+              <div>
+                <h4>Key methods</h4>
+                <div class="tags">
+                  <span class="tag">VLA models</span>
+                  <span class="tag">jailbreaking &amp; prompt injection</span>
+                  <span class="tag">embodiment distribution shift</span>
+                  <span class="tag">generative world models</span>
+                  <span class="tag">RLHF &amp; DPO</span>
+                  <span class="tag">GRPO &amp; verifiable rewards</span>
+                  <span class="tag">conformal deference</span>
+                  <span class="tag">red teaming</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="ch">
+          <summary>
+            <span class="ch-num">6</span>
+            <span class="ch-title">Rare-Event Certification</span>
+            <span class="ch-leader"></span>
+            <span class="ch-meta">11 exercises</span>
+            <span class="ch-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="ch-body">
+            <p class="ch-hook">Certifying safety for failures too rare to ever observe — from the rule of three to importance sampling and finite-sample bounds that turn statistical evidence into a safety case.</p>
+            <p class="ch-sum">
+              Develops the statistical machinery for certifying systems whose failure
+              probabilities are so small that naive testing would demand billions of
+              trials. States the premises that fix what a certificate means, then builds
+              estimators from naive Monte Carlo through importance sampling with provable
+              efficiency to learning-based methods usable in high dimension — analyzing
+              surrogate bias and one-sided bounds — and closes with the finite-sample
+              certification verdict and the path from statistical evidence to safety
+              standards.
+            </p>
+            <div class="ch-cols">
+              <div>
+                <h4>Sections</h4>
+                <ol>
+                  <li>The Certification Problem</li>
+                  <li>Failure Discovery</li>
+                  <li>Monte Carlo Methods and Importance Sampling</li>
+                  <li>Learning-Based Estimation in High Dimension</li>
+                  <li>The Certification Verdict</li>
+                  <li>From Certificates to Deployment</li>
+                </ol>
+              </div>
+              <div>
+                <h4>Key methods</h4>
+                <div class="tags">
+                  <span class="tag">rare-event estimation</span>
+                  <span class="tag">falsification &amp; STL</span>
+                  <span class="tag">importance sampling</span>
+                  <span class="tag">multilevel splitting</span>
+                  <span class="tag">deep importance sampling</span>
+                  <span class="tag">Clopper–Pearson bounds</span>
+                  <span class="tag">rule of three</span>
+                  <span class="tag">conformal risk control</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="ch">
+          <summary>
+            <span class="ch-num">7</span>
+            <span class="ch-title">Regulation, Standards, and Human Oversight</span>
+            <span class="ch-leader"></span>
+            <span class="ch-meta">9 exercises</span>
+            <span class="ch-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="ch-body">
+            <p class="ch-hook">Where mathematical safety bounds meet the institutions — standards, regulators, and insurers — that decide whether a physical AI system is allowed to ship.</p>
+            <p class="ch-sum">
+              Connects the technical evidence of the earlier chapters to the
+              institutional process that authorizes deployment, in three movements:
+              the standards and functional-safety spine, the human layer of oversight
+              and shared autonomy, and the accountability stack of regulation,
+              liability, and insurance. The safety case is the integrating artifact
+              that consumes each prior chapter's evidence; the chapter closes with a
+              one-page deployment dossier and open problems for the field.
+            </p>
+            <div class="ch-cols">
+              <div>
+                <h4>Sections</h4>
+                <ol>
+                  <li>The Standards Landscape</li>
+                  <li>Hazard Analysis for Learning-Enabled Systems</li>
+                  <li>Functional Safety of AI Systems</li>
+                  <li>Safety Cases as the Integrating Artifact</li>
+                  <li>Human Oversight Engineering</li>
+                  <li>Shared Autonomy and Physical Human–Robot Interaction</li>
+                  <li>Privacy of Embodied Sensing</li>
+                  <li>Regulating Physical AI · Liability · Insurability</li>
+                  <li>The Deployment Dossier</li>
+                  <li>Outlook: Open Problems in Physical AI Safety</li>
+                </ol>
+              </div>
+              <div>
+                <h4>Key methods</h4>
+                <div class="tags">
+                  <span class="tag">AI functional-safety standards</span>
+                  <span class="tag">STPA hazard analysis</span>
+                  <span class="tag">GSN safety cases</span>
+                  <span class="tag">EU AI Act human oversight</span>
+                  <span class="tag">physical HRI</span>
+                  <span class="tag">liability &amp; insurability</span>
+                  <span class="tag">deployment dossier</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Course ============ -->
+  <section class="block" id="course">
+    <div class="wrap">
+      <p class="sec-eyebrow">The Course</p>
+      <h2>Taught live at Carnegie Mellon, Summer 2026</h2>
+      <p class="lead">
+        The book is the backbone of a graduate course at Carnegie Mellon University.
+        Lectures are recorded as the course runs; videos, slides, and weekly exercises
+        will be posted here within days of each session. The course follows the book's
+        14-week design: two weeks on foundations, then two weeks per failure-mode
+        chapter, with a course project.
+      </p>
+      <div class="course-grid">
+        <table class="plain">
+          <thead>
+            <tr><th>Weeks</th><th>Chapter</th><th>Theme</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1–2</td><td>1 · Mathematical Foundations</td><td>Deep learning, sequential decision-making, uncertainty</td></tr>
+            <tr><td>3–4</td><td>2 · Robustness</td><td>Attacks, defenses, and certified robustness</td></tr>
+            <tr><td>5–6</td><td>3 · Generalization</td><td>Distribution shift, adaptation, sim-to-real</td></tr>
+            <tr><td>7–8</td><td>4 · Constraint Safety</td><td>Safe reinforcement learning and runtime guards</td></tr>
+            <tr><td>9–10</td><td>5 · Foundation Model Safety</td><td>VLA models, world models, alignment, guardrails</td></tr>
+            <tr><td>11–12</td><td>6 · Rare-Event Certification</td><td>Statistical certification of rare failures</td></tr>
+            <tr><td>13–14</td><td>7 · Regulation &amp; Oversight</td><td>Standards, safety cases, human oversight</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Materials ============ -->
+  <section class="block" id="materials">
+    <div class="wrap">
+      <p class="sec-eyebrow">Materials</p>
+      <h2>Everything in one place</h2>
+      <p class="lead">
+        This page is the single entry point. The PDF, videos, and code live on the
+        platforms that suit them best, and are all linked from here as they are released.
+      </p>
+      <div class="cards">
+        <div class="card">
+          <h3>Read the Book</h3>
+          <p>
+            The complete manuscript as a free PDF — cover, table of contents, internal
+            links, and citation metadata included. Posted here as the Summer 2026
+            Course Edition when the course opens. Each update keeps a changelog and
+            links to prior versions.
+          </p>
+          <span class="status">PDF · coming soon</span>
+        </div>
+        <div class="card">
+          <h3>Watch the Course</h3>
+          <p>
+            Full lecture recordings from the live CMU course, one video per session,
+            each opening with the chapter it covers and closing with a summary and
+            reading for the week.
+          </p>
+          <span class="status">Playlist · posted as the course runs</span>
+        </div>
+        <div class="card">
+          <h3>Slides, Exercises &amp; Code</h3>
+          <p>
+            A companion GitHub repository with per-lecture folders: slides, student
+            exercises, runnable notebooks, and the hospital mobile-manipulator
+            simulation scaffold used throughout the book.
+          </p>
+          <span class="status">GitHub · coming soon</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Version history ============ -->
+  <section class="block" id="versions">
+    <div class="wrap">
+      <p class="sec-eyebrow">Version History</p>
+      <h2>A living manuscript</h2>
+      <p class="lead">
+        The online edition is continuously improved — every release is listed here
+        with its changes, and earlier versions remain available.
+      </p>
+      <div class="course-grid">
+        <table class="plain">
+          <thead>
+            <tr><th>Date</th><th>Version</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2026-07</td>
+              <td>Summer 2026 Course Edition</td>
+              <td>In preparation — full manuscript (7 chapters, 68 solved exercises) being finalized for the CMU summer course.</td>
+            </tr>
+            <tr>
+              <td>2026-07-14</td>
+              <td>Site launch</td>
+              <td>Course and book homepage online.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Cite ============ -->
+  <section class="block" id="cite">
+    <div class="wrap">
+      <p class="sec-eyebrow">How to Cite</p>
+      <h2>Citing the book</h2>
+      <p class="lead">Until a formal edition appears, please cite the online manuscript:</p>
+      <div class="citebox">
+        <button class="copybtn" type="button" data-copy>Copy</button>
+        <pre id="bibtex">@book{zhao2026physicalaisafety,
+  author = {Zhao, Ding},
+  title  = {Physical AI Safety: The Gateway to Deploying AI
+            in the Real World},
+  year   = {2026},
+  note   = {Manuscript, Summer 2026 Course Edition},
+  url    = {https://safeai-lab.github.io/physical-ai-safety/}
+}</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Copyright ============ -->
+  <section class="block" id="usage">
+    <div class="wrap">
+      <p class="sec-eyebrow">Copyright and Usage</p>
+      <h2>Free to read, rights reserved</h2>
+      <div class="two-col">
+        <div>
+          <h3>The manuscript</h3>
+          <p>
+            © 2026 Ding Zhao. All rights reserved. The PDF posted here is free to
+            read, download, and use for personal study and classroom teaching.
+            Please link to this page rather than re-hosting the file, so readers
+            always find the current version. For any other use, contact the author.
+          </p>
+        </div>
+        <div>
+          <h3>Course materials</h3>
+          <p>
+            Slides, exercises, and code carry their own licenses, stated in the
+            companion repository. Instructors are welcome to adopt the materials;
+            adoption notes will accompany the full release at the end of the
+            Summer 2026 course.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="legal">
+      <p><strong>Physical AI Safety</strong> — the book and CMU course by Ding Zhao.</p>
+      <p>© 2026 Ding Zhao · <a href="https://safeai-lab.github.io/">Safe AI Lab</a>, Carnegie Mellon University</p>
+    </div>
+    <div>
+      <p><a href="#top">Back to top ↑</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelector("[data-copy]").addEventListener("click", function () {
+    var text = document.getElementById("bibtex").innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var btn = document.querySelector("[data-copy]");
+      btn.textContent = "Copied";
+      setTimeout(function () { btn.textContent = "Copy"; }, 1600);
+    });
+  });
+</script>
+
 </body>
 </html>

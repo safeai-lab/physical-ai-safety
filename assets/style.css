@@ -1,0 +1,278 @@
+/* Physical AI Safety — book site
+   Palette and discipline inherited from the book's own design system:
+   Okabe-Ito accents (bookblue/bookorange/bookteal), booktabs restraint. */
+
+:root {
+  --ink: #1b2129;
+  --ink-soft: #3d4654;
+  --paper: #fbfaf7;
+  --paper-deep: #f3f1ea;
+  --bookblue: #0072b2;
+  --bookblue-deep: #005a8e;
+  --bookorange: #e69f00;
+  --bookteal: #009e73;
+  --bookgray: #6b7684;
+  --rule: #d8d5cc;
+  --serif: "STIX Two Text", "Times New Roman", serif;
+  --sans: "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", "SF Mono", Consolas, monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+body {
+  font-family: var(--sans);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--bookblue); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { color: var(--bookblue-deep); }
+:focus-visible { outline: 2px solid var(--bookblue); outline-offset: 2px; }
+
+.wrap { max-width: 66rem; margin: 0 auto; padding: 0 1.5rem; }
+
+/* ---------- top nav ---------- */
+
+.topbar {
+  position: sticky; top: 0; z-index: 20;
+  background: rgba(251, 250, 247, 0.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--rule);
+}
+.topbar .wrap {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 1rem; padding-top: 0.7rem; padding-bottom: 0.7rem;
+}
+.brand {
+  font-family: var(--serif); font-weight: 600; font-size: 1.05rem;
+  color: var(--ink); text-decoration: none; white-space: nowrap;
+}
+.topnav { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+.topnav a {
+  font-size: 0.86rem; letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--ink-soft); text-decoration: none;
+}
+.topnav a:hover { color: var(--bookblue); }
+@media (max-width: 44rem) {
+  .topnav { display: none; }
+  .topbar .wrap { justify-content: center; }
+}
+
+/* ---------- hero ---------- */
+
+.hero { padding: 5.5rem 0 4rem; border-bottom: 1px solid var(--rule); }
+.eyebrow {
+  font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--bookgray); margin-bottom: 1.6rem;
+}
+.eyebrow strong { color: var(--bookblue); font-weight: 600; }
+.hero h1 {
+  font-family: var(--serif); font-weight: 600;
+  font-size: clamp(2.3rem, 5.6vw, 4.1rem);
+  line-height: 1.08; letter-spacing: -0.015em;
+  max-width: 21ch;
+}
+.hero h1 em { font-style: italic; color: var(--bookblue); }
+.hero .booktitle {
+  margin-top: 2rem; font-family: var(--serif); font-size: 1.35rem;
+}
+.hero .booktitle .subtitle { color: var(--ink-soft); font-style: italic; }
+.hero .pitch { max-width: 46rem; margin-top: 1.1rem; color: var(--ink-soft); }
+
+.objects {
+  display: flex; flex-wrap: wrap; gap: 0.6rem 1.1rem; align-items: center;
+  margin-top: 1.9rem; font-family: var(--mono); font-size: 0.86rem;
+  color: var(--ink-soft);
+}
+.objects .obj {
+  border: 1px solid var(--rule); border-radius: 3px;
+  background: #fff; padding: 0.32rem 0.6rem;
+}
+.objects .obj b { font-weight: 600; }
+.objects .o-env b  { color: var(--bookteal); }
+.objects .o-pol b  { color: var(--bookblue); }
+.objects .o-eval b { color: var(--bookorange); }
+.objects .times { color: var(--bookgray); }
+
+.cta-row { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2.4rem; }
+.btn {
+  display: inline-block; padding: 0.72rem 1.35rem; border-radius: 3px;
+  font-size: 0.98rem; font-weight: 600; text-decoration: none;
+  border: 1px solid transparent;
+}
+.btn-primary { background: var(--bookblue); color: #fff; }
+.btn-primary:hover { background: var(--bookblue-deep); color: #fff; }
+.btn-ghost { border-color: var(--bookgray); color: var(--ink); background: transparent; }
+.btn-ghost:hover { border-color: var(--bookblue); color: var(--bookblue); }
+.btn[aria-disabled="true"] {
+  background: var(--paper-deep); color: var(--bookgray);
+  border-color: var(--rule); cursor: default;
+}
+.version-note { margin-top: 1rem; font-size: 0.88rem; color: var(--bookgray); }
+.version-note .dot { color: var(--bookorange); }
+
+/* ---------- stats band ---------- */
+
+.stats { border-bottom: 1px solid var(--rule); background: var(--paper-deep); }
+.stats .wrap {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1rem; padding-top: 1.5rem; padding-bottom: 1.5rem;
+}
+.stat { text-align: left; }
+.stat .n { font-family: var(--serif); font-size: 1.8rem; font-weight: 600; }
+.stat .l { font-size: 0.84rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--bookgray); }
+@media (max-width: 40rem) { .stats .wrap { grid-template-columns: repeat(2, 1fr); } }
+
+/* ---------- sections ---------- */
+
+section.block { padding: 4.2rem 0; border-bottom: 1px solid var(--rule); }
+.sec-eyebrow {
+  font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--bookblue); margin-bottom: 0.7rem; font-weight: 600;
+}
+section.block h2 {
+  font-family: var(--serif); font-weight: 600;
+  font-size: clamp(1.7rem, 3.2vw, 2.3rem); line-height: 1.15;
+  margin-bottom: 1.2rem; letter-spacing: -0.01em;
+}
+section.block .lead { max-width: 46rem; color: var(--ink-soft); }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 2rem; }
+@media (max-width: 50rem) { .two-col { grid-template-columns: 1fr; } }
+.two-col h3 {
+  font-family: var(--serif); font-size: 1.15rem; font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.two-col p { color: var(--ink-soft); font-size: 0.98rem; }
+.two-col p + h3 { margin-top: 1.4rem; }
+
+/* ---------- chapter ToC (signature) ---------- */
+
+.toc { margin-top: 2.4rem; }
+details.ch { border-top: 1px solid var(--rule); }
+details.ch:last-of-type { border-bottom: 1px solid var(--rule); }
+details.ch > summary {
+  list-style: none; cursor: pointer;
+  display: flex; align-items: baseline; gap: 1rem;
+  padding: 1.05rem 0.2rem;
+}
+details.ch > summary::-webkit-details-marker { display: none; }
+details.ch > summary:hover .ch-title { color: var(--bookblue); }
+.ch-num {
+  font-family: var(--mono); font-size: 0.9rem; color: var(--bookgray);
+  min-width: 1.6rem;
+}
+.ch-title {
+  font-family: var(--serif); font-size: 1.22rem; font-weight: 600;
+  white-space: nowrap;
+}
+.ch-leader {
+  flex: 1; border-bottom: 2px dotted var(--rule);
+  transform: translateY(-0.35rem); min-width: 2rem;
+}
+.ch-meta {
+  font-family: var(--mono); font-size: 0.78rem; color: var(--bookgray);
+  white-space: nowrap;
+}
+.ch-toggle {
+  font-family: var(--mono); color: var(--bookblue); font-size: 1rem;
+  width: 1.1rem; text-align: center;
+}
+details.ch[open] .ch-toggle::before { content: "−"; }
+details.ch:not([open]) .ch-toggle::before { content: "+"; }
+
+.ch-body { padding: 0.2rem 0 1.8rem 2.6rem; }
+@media (max-width: 40rem) {
+  .ch-body { padding-left: 0; }
+  .ch-title { white-space: normal; }
+  .ch-meta { display: none; }
+}
+.ch-hook {
+  font-family: var(--serif); font-style: italic; font-size: 1.05rem;
+  color: var(--ink); border-left: 3px solid var(--bookorange);
+  padding-left: 0.9rem; margin-bottom: 1rem; max-width: 44rem;
+}
+.ch-body .ch-sum { color: var(--ink-soft); font-size: 0.97rem; max-width: 46rem; }
+.ch-cols { display: grid; grid-template-columns: 1.2fr 1fr; gap: 2rem; margin-top: 1.2rem; }
+@media (max-width: 50rem) { .ch-cols { grid-template-columns: 1fr; } }
+.ch-cols h4 {
+  font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--bookgray); margin-bottom: 0.5rem;
+}
+.ch-cols ol { padding-left: 1.2rem; font-size: 0.93rem; color: var(--ink-soft); }
+.ch-cols ol li { margin-bottom: 0.25rem; }
+.tags { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+.tag {
+  font-size: 0.8rem; padding: 0.18rem 0.55rem; border-radius: 3px;
+  background: #fff; border: 1px solid var(--rule); color: var(--ink-soft);
+}
+
+/* ---------- course table ---------- */
+
+.course-grid { margin-top: 2rem; overflow-x: auto; }
+table.plain {
+  border-collapse: collapse; width: 100%; font-size: 0.95rem;
+}
+table.plain th {
+  text-align: left; font-size: 0.78rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--bookgray);
+  border-bottom: 2px solid var(--ink); padding: 0.5rem 0.9rem 0.5rem 0;
+}
+table.plain td {
+  border-bottom: 1px solid var(--rule);
+  padding: 0.55rem 0.9rem 0.55rem 0; color: var(--ink-soft);
+  vertical-align: top;
+}
+table.plain td:first-child { font-family: var(--mono); font-size: 0.85rem; white-space: nowrap; }
+
+/* ---------- materials cards ---------- */
+
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-top: 2rem; }
+@media (max-width: 50rem) { .cards { grid-template-columns: 1fr; } }
+.card {
+  border: 1px solid var(--rule); border-radius: 4px; background: #fff;
+  padding: 1.4rem 1.3rem; display: flex; flex-direction: column; gap: 0.5rem;
+}
+.card h3 { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; }
+.card p { font-size: 0.92rem; color: var(--ink-soft); flex: 1; }
+.card .status {
+  font-family: var(--mono); font-size: 0.76rem; color: var(--bookgray);
+}
+.card .status.live { color: var(--bookteal); }
+
+/* ---------- cite ---------- */
+
+.citebox {
+  position: relative; margin-top: 1.6rem; border: 1px solid var(--rule);
+  border-radius: 4px; background: #fff;
+}
+.citebox pre {
+  padding: 1.3rem 1.4rem; overflow-x: auto;
+  font-family: var(--mono); font-size: 0.84rem; line-height: 1.55;
+  color: var(--ink-soft);
+}
+.copybtn {
+  position: absolute; top: 0.6rem; right: 0.6rem;
+  font-family: var(--sans); font-size: 0.8rem; font-weight: 600;
+  color: var(--bookblue); background: var(--paper);
+  border: 1px solid var(--rule); border-radius: 3px;
+  padding: 0.28rem 0.7rem; cursor: pointer;
+}
+.copybtn:hover { border-color: var(--bookblue); }
+
+/* ---------- footer ---------- */
+
+footer { padding: 3rem 0 4rem; color: var(--bookgray); font-size: 0.9rem; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 2rem; justify-content: space-between; }
+footer a { color: var(--ink-soft); }
+.legal { max-width: 34rem; }
+.legal p + p { margin-top: 0.6rem; }
