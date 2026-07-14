@@ -11,8 +11,8 @@ materials (slides, exercises, notebooks, code), maintained by the
 
 | Address | Role |
 |---|---|
-| https://physical-ai-safety.org/ | Public brand domain (pending DNS setup — see below) |
-| https://safeai-lab.github.io/physical-ai-safety/ | GitHub Pages hosting address |
+| https://physical-ai-safety.org/ | Public brand domain — **live**, use this everywhere |
+| https://safeai-lab.github.io/physical-ai-safety/ | GitHub Pages hosting address (redirects to the .org) |
 | https://github.com/safeai-lab/physical-ai-safety | This repository |
 
 ## Branches
@@ -21,26 +21,24 @@ materials (slides, exercises, notebooks, code), maintained by the
 - **`book`** — the full site (hero, chapter guide, course schedule,
   materials, citation, usage). Merge `book` → `main` to publish it.
 
-## Connecting physical-ai-safety.org (two manual steps)
+## Domain configuration (done 2026-07-14)
 
-1. **Register** `physical-ai-safety.org` at any registrar.
-2. **DNS records** at the registrar:
-   - Apex `physical-ai-safety.org`: four `A` records →
-     `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
-     (plus `AAAA` records `2606:50c0:8000::153` … `8003::153` if supported)
-   - `www`: `CNAME` → `safeai-lab.github.io`
+`physical-ai-safety.org` is registered at GoDaddy and connected:
 
-Then attach the domain to this repo (either in Settings → Pages, or):
+- Apex `A` records → `185.199.108.153`, `185.199.109.153`,
+  `185.199.110.153`, `185.199.111.153` (GitHub Pages)
+- `www` `CNAME` → `safeai-lab.github.io`
+- Custom domain attached to this repo's Pages site; HTTPS enforced.
+
+If DNS ever needs to be rebuilt, recreate exactly the records above at the
+registrar, then:
 
 ```bash
 gh api -X PUT repos/safeai-lab/physical-ai-safety/pages \
   -f cname=physical-ai-safety.org
+gh api -X PUT repos/safeai-lab/physical-ai-safety/pages \
+  -F https_enforced=true
 ```
-
-Wait for the DNS check to pass, then enable **Enforce HTTPS** in
-Settings → Pages. Do **not** add a `CNAME` file before the domain is
-registered — GitHub would redirect the working `.github.io` URL to a
-dead domain.
 
 ## Coming here as the course runs (Summer 2026)
 
