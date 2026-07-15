@@ -13,6 +13,45 @@
   var nextBtn = document.getElementById("next-ch");
   var side = document.getElementById("side");
   var sideToggle = document.getElementById("side-toggle");
+  var fmtPdf = document.getElementById("fmt-pdf");
+  var fmtHtml = document.getElementById("fmt-html");
+  var fmt = "pdf";
+  try { fmt = localStorage.getItem("pas-fmt") || "pdf"; } catch (e) {}
+
+  var GISCUS = {
+    repo: "safeai-lab/physical-ai-safety",
+    repoId: "R_kgDOTYwalg",
+    category: "General",
+    categoryId: "DIC_kwDOTYwals4DBOqv"
+  };
+  var giscusTerm = null;
+  function mountDiscussion(ch) {
+    var term = "chapter-" + ch.id;
+    if (term === giscusTerm) return;
+    giscusTerm = term;
+    var box = document.getElementById("giscus-box");
+    while (box.firstChild) box.removeChild(box.firstChild);
+    var s = document.createElement("script");
+    s.src = "https://giscus.app/client.js";
+    s.async = true;
+    s.crossOrigin = "anonymous";
+    s.setAttribute("data-repo", GISCUS.repo);
+    s.setAttribute("data-repo-id", GISCUS.repoId);
+    s.setAttribute("data-category", GISCUS.category);
+    s.setAttribute("data-category-id", GISCUS.categoryId);
+    s.setAttribute("data-mapping", "specific");
+    s.setAttribute("data-term", term);
+    s.setAttribute("data-strict", "0");
+    s.setAttribute("data-reactions-enabled", "1");
+    s.setAttribute("data-emit-metadata", "0");
+    s.setAttribute("data-input-position", "top");
+    s.setAttribute("data-theme", "light");
+    s.setAttribute("data-lang", "en");
+    box.appendChild(s);
+    document.getElementById("discuss-title").textContent =
+      "Discuss " + (ch.num === "—" || ch.num === "A" ? ch.title
+        : "Chapter " + ch.num + " — " + ch.title);
+  }
 
   // Build sidebar (textContent only — no HTML injection path)
   chapters.forEach(function (ch) {
@@ -71,7 +110,21 @@
     paneTitle.textContent = label;
     document.title = label + " — Physical AI Safety";
 
-    if (ch.available) {
+    // Format toggle state for this chapter
+    var htmlReady = !!ch.htmlOk;
+    fmtHtml.disabled = !htmlReady;
+    fmtHtml.title = htmlReady ? "" : "HTML edition not posted yet";
+    var useHtml = fmt === "html" && htmlReady;
+    fmtPdf.setAttribute("aria-pressed", useHtml ? "false" : "true");
+    fmtHtml.setAttribute("aria-pressed", useHtml ? "true" : "false");
+
+    if (useHtml) {
+      frame.src = ch.html;
+      frame.hidden = false;
+      placeholder.hidden = true;
+      openTab.href = ch.html;
+      openTab.hidden = false;
+    } else if (ch.available) {
       frame.src = ch.file + "#view=FitH";
       frame.hidden = false;
       placeholder.hidden = true;
@@ -97,7 +150,16 @@
     prevBtn.disabled = i <= 0;
     nextBtn.disabled = i >= chapters.length - 1;
     side.classList.remove("open");
+    mountDiscussion(ch);
   }
+
+  function setFmt(f) {
+    fmt = f;
+    try { localStorage.setItem("pas-fmt", f); } catch (e) {}
+    render();
+  }
+  fmtPdf.addEventListener("click", function () { setFmt("pdf"); });
+  fmtHtml.addEventListener("click", function () { setFmt("html"); });
 
   function go(delta) {
     var i = idx(currentId()) + delta;
@@ -134,6 +196,17 @@
 
   if (location.protocol !== "file:" && typeof fetch === "function") {
     chapters.forEach(function (ch) {
+      // Probe the HTML edition independently of the PDF
+      if (ch.html) {
+        try {
+          fetch(ch.html, { method: "HEAD" }).then(function (res) {
+            if (res.ok) {
+              ch.htmlOk = true;
+              if (currentId() === ch.id) render();
+            }
+          }).catch(function () { /* not posted yet */ });
+        } catch (err) { /* fetch unsupported */ }
+      }
       if (ch.available) return;
       probe(ch, function () {
         var a = document.getElementById("nav-" + ch.id);

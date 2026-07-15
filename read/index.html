@@ -34,6 +34,10 @@
       <h1 class="pane-title" id="pane-title">Physical AI Safety</h1>
       <div class="pane-actions">
         <a id="open-tab" href="#" target="_blank" rel="noopener" hidden>Open in new tab ↗</a>
+        <div class="fmt" role="group" aria-label="Reading format">
+          <button id="fmt-pdf" aria-pressed="true">PDF</button>
+          <button id="fmt-html" aria-pressed="false" disabled title="HTML edition not posted yet">HTML</button>
+        </div>
         <button id="prev-ch" aria-label="Previous chapter">← Prev</button>
         <button id="next-ch" aria-label="Next chapter">Next →</button>
       </div>
@@ -56,6 +60,19 @@
         </p>
       </div>
     </div>
+
+    <section class="discuss" aria-label="Chapter discussion">
+      <div class="discuss-inner">
+        <h2 id="discuss-title">Discuss this chapter</h2>
+        <p class="discuss-sub">
+          Questions, corrections, and ideas are welcome — comments are backed by
+          <a id="discuss-gh" href="https://github.com/safeai-lab/physical-ai-safety/discussions"
+             target="_blank" rel="noopener">GitHub Discussions</a>
+          (sign in with GitHub to post).
+        </p>
+        <div id="giscus-box"></div>
+      </div>
+    </section>
   </main>
 
 </div>

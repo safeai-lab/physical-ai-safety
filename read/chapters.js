@@ -18,6 +18,7 @@ window.BOOK = {
       id: "ch1", num: "1", title: "Mathematical Foundations",
       subtitle: "10 exercises",
       file: "../pdf/physical-ai-safety-ch1.pdf", available: false,
+      html: "../html/ch1.html",
       sections: [
         "Physical AI and Its Safety Challenges",
         "Deep Learning Essentials",
@@ -30,6 +31,7 @@ window.BOOK = {
       id: "ch2", num: "2", title: "Robustness",
       subtitle: "11 exercises",
       file: "../pdf/physical-ai-safety-ch2.pdf", available: false,
+      html: "../html/ch2.html",
       sections: [
         "A Taxonomy of Robustness",
         "Adversarial Attacks",
@@ -42,6 +44,7 @@ window.BOOK = {
       id: "ch3", num: "3", title: "Generalization",
       subtitle: "8 exercises",
       file: "../pdf/physical-ai-safety-ch3.pdf", available: false,
+      html: "../html/ch3.html",
       sections: [
         "Formulation of the Generalization Problem",
         "Measuring Task Shift with Optimal Transport",
@@ -57,6 +60,7 @@ window.BOOK = {
       id: "ch4", num: "4", title: "Constraint Safety",
       subtitle: "10 exercises",
       file: "../pdf/physical-ai-safety-ch4.pdf", available: false,
+      html: "../html/ch4.html",
       sections: [
         "Formulation of Constraint Safety",
         "Primal–Dual and Trust-Region Methods",
@@ -71,6 +75,7 @@ window.BOOK = {
       id: "ch5", num: "5", title: "Foundation Model Safety",
       subtitle: "9 exercises",
       file: "../pdf/physical-ai-safety-ch5.pdf", available: false,
+      html: "../html/ch5.html",
       sections: [
         "Foundation Models as Physical Controllers",
         "Vision-Language-Action Architectures and Failure Modes",
@@ -86,6 +91,7 @@ window.BOOK = {
       id: "ch6", num: "6", title: "Rare-Event Certification",
       subtitle: "11 exercises",
       file: "../pdf/physical-ai-safety-ch6.pdf", available: false,
+      html: "../html/ch6.html",
       sections: [
         "The Certification Problem",
         "Failure Discovery",
@@ -100,6 +106,7 @@ window.BOOK = {
       id: "ch7", num: "7", title: "Regulation, Standards, and Human Oversight",
       subtitle: "9 exercises",
       file: "../pdf/physical-ai-safety-ch7.pdf", available: false,
+      html: "../html/ch7.html",
       sections: [
         "The Standards Landscape",
         "Hazard Analysis for Learning-Enabled Systems",
