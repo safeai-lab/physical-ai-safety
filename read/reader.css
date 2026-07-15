@@ -96,7 +96,10 @@ a { color: var(--accent); }
   color: var(--ink-soft); cursor: pointer;
 }
 .fmt button + button { border-left: 1px solid var(--rule); }
-.fmt button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+.pane-actions .fmt button[aria-pressed="true"],
+.pane-actions .fmt button[aria-pressed="true"]:hover:not(:disabled) {
+  background: var(--accent); color: #fff;
+}
 .fmt button:disabled { opacity: 0.4; cursor: default; }
 .side-toggle {
   display: none;
