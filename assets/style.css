@@ -90,21 +90,6 @@ a:hover { color: var(--bookblue-deep); }
 .hero .booktitle .subtitle { color: var(--ink-soft); font-style: italic; }
 .hero .pitch { max-width: 46rem; margin-top: 1.1rem; color: var(--ink-soft); }
 
-.objects {
-  display: flex; flex-wrap: wrap; gap: 0.6rem 1.1rem; align-items: center;
-  margin-top: 1.9rem; font-family: var(--mono); font-size: 0.86rem;
-  color: var(--ink-soft);
-}
-.objects .obj {
-  border: 1px solid var(--rule); border-radius: 3px;
-  background: #fff; padding: 0.32rem 0.6rem;
-}
-.objects .obj b { font-weight: 600; }
-.objects .o-env b  { color: var(--bookteal); }
-.objects .o-pol b  { color: var(--bookblue); }
-.objects .o-eval b { color: var(--bookorange); }
-.objects .times { color: var(--bookgray); }
-
 .cta-row { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2.4rem; }
 .btn {
   display: inline-block; padding: 0.72rem 1.35rem; border-radius: 3px;
