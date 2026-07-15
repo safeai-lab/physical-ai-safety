@@ -276,3 +276,9 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 2rem; justify-content: space
 footer a { color: var(--ink-soft); }
 .legal { max-width: 34rem; }
 .legal p + p { margin-top: 0.6rem; }
+
+/* ---------- read-online links in chapter dossiers ---------- */
+
+.ch-read { margin-bottom: 1rem; font-size: 0.92rem; }
+.ch-read a { font-weight: 600; text-decoration: none; }
+.ch-read a:hover { text-decoration: underline; }

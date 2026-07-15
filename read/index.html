@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Read — Physical AI Safety</title>
+  <meta name="description" content="Read Physical AI Safety by Ding Zhao online, chapter by chapter.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="reader.css">
+</head>
+<body>
+
+<div class="reader">
+
+  <aside class="side" id="side">
+    <div class="side-head">
+      <a class="side-brand" href="../">Physical AI Safety</a>
+      <p class="side-sub">The Book and CMU Course<br>by Ding Zhao</p>
+    </div>
+    <nav class="side-nav" id="chapter-nav" aria-label="Chapters"></nav>
+    <div class="side-foot">
+      <a id="full-pdf-link" class="side-download" href="#" aria-disabled="true">
+        ⬇ Full PDF — coming soon
+      </a>
+      <a class="side-home" href="../">← Book homepage</a>
+    </div>
+  </aside>
+
+  <main class="pane">
+    <div class="pane-bar">
+      <button class="side-toggle" id="side-toggle" aria-label="Toggle chapter list">☰ Chapters</button>
+      <h1 class="pane-title" id="pane-title">Physical AI Safety</h1>
+      <div class="pane-actions">
+        <a id="open-tab" href="#" target="_blank" rel="noopener" hidden>Open in new tab ↗</a>
+        <button id="prev-ch" aria-label="Previous chapter">← Prev</button>
+        <button id="next-ch" aria-label="Next chapter">Next →</button>
+      </div>
+    </div>
+
+    <div class="pane-body" id="pane-body">
+      <!-- Either the PDF iframe or the placeholder is shown -->
+      <iframe id="pdf-frame" title="Chapter PDF" hidden></iframe>
+      <div class="placeholder" id="placeholder">
+        <p class="ph-eyebrow" id="ph-eyebrow">Chapter</p>
+        <h2 id="ph-title"></h2>
+        <p class="ph-note">
+          This chapter posts here as the <strong>Summer 2026 Course Edition</strong>,
+          released chapter by chapter as the CMU course runs.
+          Until then, here is what it covers:
+        </p>
+        <ol class="ph-sections" id="ph-sections"></ol>
+        <p class="ph-links">
+          <a href="../#chapters">Chapter overview on the homepage →</a>
+        </p>
+      </div>
+    </div>
+  </main>
+
+</div>
+
+<script src="chapters.js"></script>
+<script src="reader.js"></script>
+
+</body>
+</html>

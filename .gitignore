@@ -1,0 +1,5 @@
+# Guard: chapter/full PDFs are only committed deliberately (git add -f)
+# once the neutral-cover public edition exists. Never commit the MIT
+# Press-styled working draft.
+pdf/*.pdf
+.DS_Store
