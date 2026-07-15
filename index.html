@@ -499,16 +499,16 @@
       <div class="course-grid">
         <table class="plain">
           <thead>
-            <tr><th>Weeks</th><th>Chapter</th><th>Theme</th></tr>
+            <tr><th>Weeks</th><th>Chapter</th><th>Theme</th><th>Slides</th></tr>
           </thead>
           <tbody>
-            <tr><td>1–2</td><td>1 · Mathematical Foundations</td><td>Deep learning, sequential decision-making, uncertainty</td></tr>
-            <tr><td>3–4</td><td>2 · Robustness</td><td>Attacks, defenses, and certified robustness</td></tr>
-            <tr><td>5–6</td><td>3 · Generalization</td><td>Distribution shift, adaptation, sim-to-real</td></tr>
-            <tr><td>7–8</td><td>4 · Constraint Safety</td><td>Safe reinforcement learning and runtime guards</td></tr>
-            <tr><td>9–10</td><td>5 · Foundation Model Safety</td><td>VLA models, world models, alignment, guardrails</td></tr>
-            <tr><td>11–12</td><td>6 · Rare-Event Certification</td><td>Statistical certification of rare failures</td></tr>
-            <tr><td>13–14</td><td>7 · Regulation &amp; Oversight</td><td>Standards, safety cases, human oversight</td></tr>
+            <tr><td>1–2</td><td>1 · Mathematical Foundations</td><td>Deep learning, sequential decision-making, uncertainty</td><td><a class="slides-link" id="slides-ch1" href="slides/physical-ai-safety-ch1-slides.pdf" target="_blank" rel="noopener" hidden>PDF ↗</a></td></tr>
+            <tr><td>3–4</td><td>2 · Robustness</td><td>Attacks, defenses, and certified robustness</td><td><a class="slides-link" id="slides-ch2" href="slides/physical-ai-safety-ch2-slides.pdf" target="_blank" rel="noopener" hidden>PDF ↗</a></td></tr>
+            <tr><td>5–6</td><td>3 · Generalization</td><td>Distribution shift, adaptation, sim-to-real</td><td><a class="slides-link" id="slides-ch3" href="slides/physical-ai-safety-ch3-slides.pdf" target="_blank" rel="noopener" hidden>PDF ↗</a></td></tr>
+            <tr><td>7–8</td><td>4 · Constraint Safety</td><td>Safe reinforcement learning and runtime guards</td><td><a class="slides-link" id="slides-ch4" href="slides/physical-ai-safety-ch4-slides.pdf" target="_blank" rel="noopener" hidden>PDF ↗</a></td></tr>
+            <tr><td>9–10</td><td>5 · Foundation Model Safety</td><td>VLA models, world models, alignment, guardrails</td><td><a class="slides-link" id="slides-ch5" href="slides/physical-ai-safety-ch5-slides.pdf" target="_blank" rel="noopener" hidden>PDF ↗</a></td></tr>
+            <tr><td>11–12</td><td>6 · Rare-Event Certification</td><td>Statistical certification of rare failures</td><td><a class="slides-link" id="slides-ch6" href="slides/physical-ai-safety-ch6-slides.pdf" target="_blank" rel="noopener" hidden>PDF ↗</a></td></tr>
+            <tr><td>13–14</td><td>7 · Regulation &amp; Oversight</td><td>Standards, safety cases, human oversight</td><td><a class="slides-link" id="slides-ch7" href="slides/physical-ai-safety-ch7-slides.pdf" target="_blank" rel="noopener" hidden>PDF ↗</a></td></tr>
           </tbody>
         </table>
       </div>
@@ -676,6 +676,19 @@
         document.getElementById("pdf-status").classList.add("live");
       }
     }).catch(function () { /* not posted yet */ });
+
+    // Per-chapter slide decks: reveal each link only when its PDF exists.
+    for (var ch = 1; ch <= 7; ch++) {
+      (function (n) {
+        var link = document.getElementById("slides-ch" + n);
+        if (!link) { return; }
+        fetch("slides/physical-ai-safety-ch" + n + "-slides.pdf", { method: "HEAD" })
+          .then(function (res) {
+            if (res.ok) { link.removeAttribute("hidden"); }
+          })
+          .catch(function () { /* deck not posted yet */ });
+      })(ch);
+    }
   }
 
   document.querySelector("[data-copy]").addEventListener("click", function () {
