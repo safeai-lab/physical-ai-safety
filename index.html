@@ -52,7 +52,7 @@
         <a class="btn btn-ghost" href="#course">Watch the Course</a>
         <a class="btn btn-ghost" href="#materials">Slides, Exercises &amp; Code</a>
       </div>
-      <p class="version-note">
+      <p class="version-note" id="version-note">
         <span class="dot">●</span> Summer 2026 Course Edition — in preparation.
         The free PDF will be posted here as the CMU course runs.
       </p>
@@ -63,7 +63,7 @@
   <section class="stats" aria-label="Book at a glance">
     <div class="wrap">
       <div class="stat"><div class="n">7</div><div class="l">Chapters</div></div>
-      <div class="stat"><div class="n">455</div><div class="l">Pages (working draft)</div></div>
+      <div class="stat"><div class="n">455</div><div class="l">Pages (Course Edition)</div></div>
       <div class="stat"><div class="n">68</div><div class="l">Exercises, all with solutions</div></div>
       <div class="stat"><div class="n">691</div><div class="l">References</div></div>
     </div>
@@ -529,12 +529,12 @@
           <h3>Read the Book</h3>
           <p>
             The complete manuscript as a free PDF — cover, table of contents, internal
-            links, and citation metadata included. Posted as the Summer 2026
-            Course Edition when the course opens — downloadable here and readable
-            chapter by chapter in the <a href="read/index.html">online reader</a>. Each
-            update keeps a changelog and links to prior versions.
+            links, and citation metadata included. Downloadable here as the Summer 2026
+            Course Edition and readable chapter by chapter in the
+            <a href="read/index.html">online reader</a>. Each update keeps a
+            changelog and links to prior versions.
           </p>
-          <span class="status">PDF · coming soon</span>
+          <span class="status" id="pdf-status">PDF · coming soon</span>
         </div>
         <div class="card">
           <h3>Watch the Course</h3>
@@ -548,11 +548,12 @@
         <div class="card">
           <h3>Slides, Exercises &amp; Code</h3>
           <p>
-            A companion GitHub repository with per-lecture folders: slides, student
-            exercises, runnable notebooks, and the hospital mobile-manipulator
-            simulation scaffold used throughout the book.
+            The <a href="https://github.com/safeai-lab/physical-ai-safety">companion
+            GitHub repository</a> hosts this site and will carry per-lecture folders:
+            slides, student exercises, runnable notebooks, and the hospital
+            mobile-manipulator simulation scaffold used throughout the book.
           </p>
-          <span class="status">GitHub · coming soon</span>
+          <span class="status live">Repository live · lecture materials added as the course runs</span>
         </div>
       </div>
     </div>
@@ -576,7 +577,7 @@
             <tr>
               <td>2026-07</td>
               <td>Summer 2026 Course Edition</td>
-              <td>In preparation — full manuscript (7 chapters, 68 solved exercises) being finalized for the CMU summer course.</td>
+              <td>Neutral-cover free edition prepared — 455 pages, 7 chapters, 68 solved exercises — posted here for the CMU summer course.</td>
             </tr>
             <tr>
               <td>2026-07-14</td>
@@ -652,7 +653,7 @@
 </footer>
 
 <script>
-  // Light up the download button automatically once the full PDF is posted
+  // Light up all PDF-dependent copy automatically once the full PDF is posted
   // (same auto-detection as the reader; no-op under file:// or before publish).
   if (location.protocol !== "file:" && typeof fetch === "function") {
     fetch("pdf/physical-ai-safety.pdf", { method: "HEAD" }).then(function (res) {
@@ -661,6 +662,18 @@
         btn.href = "pdf/physical-ai-safety.pdf";
         btn.removeAttribute("aria-disabled");
         btn.textContent = "Download the Book (PDF)";
+        var note = document.getElementById("version-note");
+        note.innerHTML = "";
+        var dot = document.createElement("span");
+        dot.className = "dot";
+        dot.textContent = "●";
+        note.appendChild(dot);
+        note.appendChild(document.createTextNode(
+          " Summer 2026 Course Edition — available now as a free PDF, " +
+          "readable online chapter by chapter."));
+        document.getElementById("pdf-status").textContent =
+          "PDF · Summer 2026 Course Edition, 455 pages";
+        document.getElementById("pdf-status").classList.add("live");
       }
     }).catch(function () { /* not posted yet */ });
   }
