@@ -1,14 +1,15 @@
 /* Physical AI Safety — book site
-   Palette and discipline inherited from the book's own design system:
-   Okabe-Ito accents (bookblue/bookorange/bookteal), booktabs restraint. */
+   Accent: Carnegie red (author's choice, 2026-07-14), one accent voice
+   site-wide. Layout discipline inherited from the book (booktabs restraint);
+   the book's interior figures keep their own Okabe-Ito palette. */
 
 :root {
   --ink: #1b2129;
   --ink-soft: #3d4654;
   --paper: #fbfaf7;
   --paper-deep: #f3f1ea;
-  --bookblue: #0072b2;
-  --bookblue-deep: #005a8e;
+  --accent: #c41230;      /* Carnegie red */
+  --accent-deep: #9e0e27;
   --bookorange: #e69f00;
   --bookteal: #009e73;
   --bookgray: #6b7684;
@@ -35,9 +36,9 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-a { color: var(--bookblue); text-decoration-thickness: 1px; text-underline-offset: 2px; }
-a:hover { color: var(--bookblue-deep); }
-:focus-visible { outline: 2px solid var(--bookblue); outline-offset: 2px; }
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { color: var(--accent-deep); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 .wrap { max-width: 66rem; margin: 0 auto; padding: 0 1.5rem; }
 
@@ -62,7 +63,7 @@ a:hover { color: var(--bookblue-deep); }
   font-size: 0.86rem; letter-spacing: 0.04em; text-transform: uppercase;
   color: var(--ink-soft); text-decoration: none;
 }
-.topnav a:hover { color: var(--bookblue); }
+.topnav a:hover { color: var(--accent); }
 @media (max-width: 44rem) {
   .topnav { display: none; }
   .topbar .wrap { justify-content: center; }
@@ -75,14 +76,14 @@ a:hover { color: var(--bookblue-deep); }
   font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--bookgray); margin-bottom: 1.6rem;
 }
-.eyebrow strong { color: var(--bookblue); font-weight: 600; }
+.eyebrow strong { color: var(--accent); font-weight: 600; }
 .hero h1 {
   font-family: var(--serif); font-weight: 600;
   font-size: clamp(2.8rem, 7vw, 5rem);
   line-height: 1.06; letter-spacing: -0.015em;
   max-width: 21ch;
 }
-.hero h1 em { font-style: italic; color: var(--bookblue); }
+.hero h1 em { font-style: italic; color: var(--accent); }
 .hero .booktitle {
   margin-top: 0.9rem; font-family: var(--serif);
   font-size: clamp(1.2rem, 2.4vw, 1.6rem);
@@ -96,16 +97,16 @@ a:hover { color: var(--bookblue-deep); }
   font-size: 0.98rem; font-weight: 600; text-decoration: none;
   border: 1px solid transparent;
 }
-.btn-primary { background: var(--bookblue); color: #fff; }
-.btn-primary:hover { background: var(--bookblue-deep); color: #fff; }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent-deep); color: #fff; }
 .btn-ghost { border-color: var(--bookgray); color: var(--ink); background: transparent; }
-.btn-ghost:hover { border-color: var(--bookblue); color: var(--bookblue); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
 .btn[aria-disabled="true"] {
   background: var(--paper-deep); color: var(--bookgray);
   border-color: var(--rule); cursor: default;
 }
 .version-note { margin-top: 1rem; font-size: 0.88rem; color: var(--bookgray); }
-.version-note .dot { color: var(--bookorange); }
+.version-note .dot { color: var(--accent); }
 
 /* ---------- stats band ---------- */
 
@@ -124,7 +125,7 @@ a:hover { color: var(--bookblue-deep); }
 section.block { padding: 4.2rem 0; border-bottom: 1px solid var(--rule); }
 .sec-eyebrow {
   font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--bookblue); margin-bottom: 0.7rem; font-weight: 600;
+  color: var(--accent); margin-bottom: 0.7rem; font-weight: 600;
 }
 section.block h2 {
   font-family: var(--serif); font-weight: 600;
@@ -152,7 +153,7 @@ details.ch > summary {
   padding: 1.05rem 0.2rem;
 }
 details.ch > summary::-webkit-details-marker { display: none; }
-details.ch > summary:hover .ch-title { color: var(--bookblue); }
+details.ch > summary:hover .ch-title { color: var(--accent); }
 .ch-num {
   font-family: var(--mono); font-size: 0.9rem; color: var(--bookgray);
   min-width: 1.6rem;
@@ -170,7 +171,7 @@ details.ch > summary:hover .ch-title { color: var(--bookblue); }
   white-space: nowrap;
 }
 .ch-toggle {
-  font-family: var(--mono); color: var(--bookblue); font-size: 1rem;
+  font-family: var(--mono); color: var(--accent); font-size: 1rem;
   width: 1.1rem; text-align: center;
 }
 details.ch[open] .ch-toggle::before { content: "−"; }
@@ -184,7 +185,7 @@ details.ch:not([open]) .ch-toggle::before { content: "+"; }
 }
 .ch-hook {
   font-family: var(--serif); font-style: italic; font-size: 1.05rem;
-  color: var(--ink); border-left: 3px solid var(--bookorange);
+  color: var(--ink); border-left: 3px solid var(--accent);
   padding-left: 0.9rem; margin-bottom: 1rem; max-width: 44rem;
 }
 .ch-body .ch-sum { color: var(--ink-soft); font-size: 0.97rem; max-width: 46rem; }
@@ -249,11 +250,11 @@ table.plain td:first-child { font-family: var(--mono); font-size: 0.85rem; white
 .copybtn {
   position: absolute; top: 0.6rem; right: 0.6rem;
   font-family: var(--sans); font-size: 0.8rem; font-weight: 600;
-  color: var(--bookblue); background: var(--paper);
+  color: var(--accent); background: var(--paper);
   border: 1px solid var(--rule); border-radius: 3px;
   padding: 0.28rem 0.7rem; cursor: pointer;
 }
-.copybtn:hover { border-color: var(--bookblue); }
+.copybtn:hover { border-color: var(--accent); }
 
 /* ---------- footer ---------- */
 
