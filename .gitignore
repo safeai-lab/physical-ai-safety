@@ -3,3 +3,5 @@
 # Press-styled working draft.
 pdf/*.pdf
 .DS_Store
+# HTML edition built from the unpublished manuscript — never commit.
+html/
