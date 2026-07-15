@@ -117,4 +117,37 @@
 
   window.addEventListener("hashchange", render);
   render();
+
+  // Auto-detect posted PDFs: HEAD-probe each unavailable entry so releasing
+  // a chapter only requires committing its PDF — no manifest flag edits.
+  // Skipped under file:// (fetch cannot probe local files there).
+  function probe(entry, onUpgrade) {
+    try {
+      fetch(entry.file, { method: "HEAD" }).then(function (res) {
+        if (res.ok) {
+          entry.available = true;
+          onUpgrade();
+        }
+      }).catch(function () { /* not posted yet */ });
+    } catch (err) { /* fetch unsupported */ }
+  }
+
+  if (location.protocol !== "file:" && typeof fetch === "function") {
+    chapters.forEach(function (ch) {
+      if (ch.available) return;
+      probe(ch, function () {
+        var a = document.getElementById("nav-" + ch.id);
+        var badge = a ? a.querySelector(".soon") : null;
+        if (badge) a.removeChild(badge);
+        if (currentId() === ch.id) render();
+      });
+    });
+    if (!full.available) {
+      probe(full, function () {
+        fullLink.href = full.file;
+        fullLink.removeAttribute("aria-disabled");
+        fullLink.textContent = "⬇ Download the full PDF";
+      });
+    }
+  }
 })();

@@ -15,6 +15,17 @@ materials (slides, exercises, notebooks, code), maintained by the
 | https://safeai-lab.github.io/physical-ai-safety/ | GitHub Pages hosting address |
 | https://github.com/safeai-lab/physical-ai-safety | This repository |
 
+## Preview locally
+
+```bash
+./serve.sh          # then open http://localhost:8400/read/
+```
+
+Double-clicking `read/index.html` also works for a quick look, but the
+served version is the faithful one (`file://` URLs skip index resolution
+and PDF auto-detection). Chapter PDFs in `pdf/` light up in the reader
+automatically when present — no flags to edit.
+
 ## Branches
 
 - **`main`** — deployed to GitHub Pages. Currently the launch placeholder.
