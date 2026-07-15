@@ -54,7 +54,7 @@
         <span class="obj o-eval"><b>E</b>[Σ r]&nbsp; the human criterion</span>
       </div>
       <div class="cta-row">
-        <a class="btn btn-primary" href="#materials" aria-disabled="true">Download the Book — coming soon</a>
+        <a class="btn btn-primary" id="download-book" href="#materials" aria-disabled="true">Download the Book — coming soon</a>
         <a class="btn btn-ghost" href="read/">Read Online</a>
         <a class="btn btn-ghost" href="#course">Watch the Course</a>
         <a class="btn btn-ghost" href="#materials">Slides, Exercises &amp; Code</a>
@@ -70,7 +70,7 @@
   <section class="stats" aria-label="Book at a glance">
     <div class="wrap">
       <div class="stat"><div class="n">7</div><div class="l">Chapters</div></div>
-      <div class="stat"><div class="n">465</div><div class="l">Pages (working draft)</div></div>
+      <div class="stat"><div class="n">455</div><div class="l">Pages (working draft)</div></div>
       <div class="stat"><div class="n">68</div><div class="l">Exercises, all with solutions</div></div>
       <div class="stat"><div class="n">691</div><div class="l">References</div></div>
     </div>
@@ -659,6 +659,19 @@
 </footer>
 
 <script>
+  // Light up the download button automatically once the full PDF is posted
+  // (same auto-detection as the reader; no-op under file:// or before publish).
+  if (location.protocol !== "file:" && typeof fetch === "function") {
+    fetch("pdf/physical-ai-safety.pdf", { method: "HEAD" }).then(function (res) {
+      if (res.ok) {
+        var btn = document.getElementById("download-book");
+        btn.href = "pdf/physical-ai-safety.pdf";
+        btn.removeAttribute("aria-disabled");
+        btn.textContent = "Download the Book (PDF)";
+      }
+    }).catch(function () { /* not posted yet */ });
+  }
+
   document.querySelector("[data-copy]").addEventListener("click", function () {
     var text = document.getElementById("bibtex").innerText;
     navigator.clipboard.writeText(text).then(function () {
