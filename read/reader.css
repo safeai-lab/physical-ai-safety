@@ -102,7 +102,7 @@ a { color: var(--accent); }
 }
 .fmt button:disabled { opacity: 0.4; cursor: default; }
 .side-toggle {
-  display: none;
+  display: inline-block;
   font-family: var(--sans); font-size: 0.85rem; font-weight: 600;
   background: none; border: 1px solid var(--rule); border-radius: 3px;
   padding: 0.3rem 0.7rem; color: var(--ink-soft); cursor: pointer;
@@ -173,4 +173,9 @@ a { color: var(--accent); }
 }
 @media (prefers-reduced-motion: reduce) {
   .side { transition: none; }
+}
+
+/* Desktop sidebar collapse (toggled by the Chapters button) */
+@media (min-width: 52.01rem) {
+  .reader.collapsed .side { display: none; }
 }

@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Physical AI Safety — The Book and CMU Course by Ding Zhao</title>
-  <meta name="description" content="Physical AI Safety: The Gateway to Deploying AI in the Real World. A graduate textbook and CMU course by Ding Zhao on robustness, generalization, constraint safety, foundation model safety, rare-event certification, and regulation of AI systems that act in the physical world.">
+  <title>Physical AI Safety — The Book by Ding Zhao</title>
+  <meta name="description" content="Physical AI Safety: The Gateway to Deploying AI in the Real World. A graduate textbook by Ding Zhao on robustness, generalization, constraint safety, foundation model safety, rare-event certification, and regulation of AI systems that act in the physical world.">
   <meta property="og:title" content="Physical AI Safety">
-  <meta property="og:description" content="The book and CMU course by Ding Zhao — mathematical tools that treat uncertainty, distribution shift, constraint violation, and rare failure as first-class objects.">
+  <meta property="og:description" content="The book by Ding Zhao — mathematical tools that treat uncertainty, distribution shift, constraint violation, and rare failure as first-class objects.">
   <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,7 +35,7 @@
   <!-- ============ Hero ============ -->
   <section class="hero">
     <div class="wrap">
-      <p class="eyebrow">The Book and CMU Course by <strong>Ding Zhao</strong></p>
+      <p class="eyebrow">The Book by <strong>Ding Zhao</strong></p>
       <h1>Physical AI Safety</h1>
       <p class="booktitle"><span class="subtitle">The Gateway to Deploying AI in the Real World</span></p>
       <p class="pitch">
@@ -55,7 +55,7 @@
       </div>
       <p class="version-note" id="version-note">
         <span class="dot">●</span> Summer 2026 Course Edition — in preparation.
-        The free PDF will be posted here as the CMU course runs.
+        The free PDF will be posted here as the course runs.
       </p>
     </div>
   </section>
@@ -489,9 +489,9 @@
   <section class="block" id="course">
     <div class="wrap">
       <p class="sec-eyebrow">The Course</p>
-      <h2>Taught live at Carnegie Mellon, Summer 2026</h2>
+      <h2>Taught live, Summer 2026</h2>
       <p class="lead">
-        The book is the backbone of a graduate course at Carnegie Mellon University.
+        The book is the backbone of a live graduate course.
         Lectures are recorded as the course runs; videos, slides, and weekly exercises
         will be posted here within days of each session. The course follows the book's
         14-week design: two weeks on foundations, then two weeks per failure-mode
@@ -540,7 +540,7 @@
         <div class="card">
           <h3>Watch the Course</h3>
           <p>
-            Full lecture recordings from the live CMU course, one video per session,
+            Full lecture recordings from the live course, one video per session,
             each opening with the chapter it covers and closing with a summary and
             reading for the week.
           </p>
@@ -578,7 +578,7 @@
             <tr>
               <td>2026-07</td>
               <td>Summer 2026 Course Edition</td>
-              <td>Neutral-cover free edition prepared — 455 pages, 7 chapters, 68 solved exercises — posted here for the CMU summer course.</td>
+              <td>Neutral-cover free edition prepared — 455 pages, 7 chapters, 68 solved exercises — posted here for the Summer 2026 course.</td>
             </tr>
             <tr>
               <td>2026-07-14</td>
@@ -592,6 +592,26 @@
   </section>
 
   <!-- ============ Cite ============ -->
+  <!-- ============ Author ============ -->
+  <section class="block" id="author">
+    <div class="wrap">
+      <p class="sec-eyebrow">About the Author</p>
+      <h2>Ding Zhao</h2>
+      <div class="author-card">
+        <img src="assets/dingzhao.jpg" alt="Portrait of Ding Zhao" width="150" height="150">
+        <p>
+          Ding Zhao is an associate professor at Carnegie Mellon University,
+          where he directs the Safe AI Lab. His research develops the
+          mathematical foundations of trustworthy AI for physical systems —
+          robustness, generalization, safe reinforcement learning, and
+          rare-event certification — with applications in autonomous driving,
+          robotics, and healthcare. This book grew out of that research and
+          his graduate teaching.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <section class="block" id="cite">
     <div class="wrap">
       <p class="sec-eyebrow">How to Cite</p>
@@ -644,7 +664,7 @@
 <footer>
   <div class="wrap">
     <div class="legal">
-      <p><strong>Physical AI Safety</strong> — the book and CMU course by Ding Zhao.</p>
+      <p><strong>Physical AI Safety</strong> — the book by Ding Zhao.</p>
       <p>© 2026 Ding Zhao · <a href="https://safeai-lab.github.io/">Safe AI Lab</a>, Carnegie Mellon University</p>
     </div>
     <div>
@@ -653,14 +673,15 @@
   </div>
 </footer>
 
+<script src="assets/pas-pdf.js"></script>
 <script>
   // Light up all PDF-dependent copy automatically once the full PDF is posted
   // (same auto-detection as the reader; no-op under file:// or before publish).
   if (location.protocol !== "file:" && typeof fetch === "function") {
-    fetch("pdf/physical-ai-safety.pdf", { method: "HEAD" }).then(function (res) {
-      if (res.ok) {
+    window.pasPdf.probe("pdf/physical-ai-safety.pdf", function () {
+      {
         var btn = document.getElementById("download-book");
-        btn.href = "pdf/physical-ai-safety.pdf";
+        window.pasPdf.wireDownload(btn, "pdf/physical-ai-safety.pdf", "physical-ai-safety.pdf");
         btn.removeAttribute("aria-disabled");
         btn.textContent = "Download the Book (PDF)";
         var note = document.getElementById("version-note");
@@ -676,18 +697,18 @@
           "PDF · Summer 2026 Course Edition, 455 pages";
         document.getElementById("pdf-status").classList.add("live");
       }
-    }).catch(function () { /* not posted yet */ });
+    });
 
     // Per-chapter slide decks: reveal each link only when its PDF exists.
     for (var ch = 1; ch <= 7; ch++) {
       (function (n) {
         var link = document.getElementById("slides-ch" + n);
         if (!link) { return; }
-        fetch("slides/physical-ai-safety-ch" + n + "-slides.pdf", { method: "HEAD" })
-          .then(function (res) {
-            if (res.ok) { link.removeAttribute("hidden"); }
-          })
-          .catch(function () { /* deck not posted yet */ });
+        var deck = "slides/physical-ai-safety-ch" + n + "-slides.pdf";
+        window.pasPdf.probe(deck, function () {
+          window.pasPdf.wireOpen(link, deck);
+          link.removeAttribute("hidden");
+        });
       })(ch);
     }
   }

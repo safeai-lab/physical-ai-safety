@@ -13,7 +13,6 @@ this step.
 
 Usage:
   python3 scripts/gate_encrypt.py --passcode 'SECRET' [--out deploy]
-                                  [--include-pdf-plaintext]
 """
 
 import argparse
@@ -129,9 +128,6 @@ def main() -> None:
     ap.add_argument("--passcode", default=os.environ.get("PAS_GATE_PASSCODE"),
                     help="gate passcode (or env PAS_GATE_PASSCODE); never stored")
     ap.add_argument("--out", default="deploy", help="staging dir (default: deploy)")
-    ap.add_argument("--include-pdf-plaintext", action="store_true",
-                    help="copy pdf/ and slides/ UNencrypted (local preview only; "
-                         "PDF encryption is a later phase)")
     args = ap.parse_args()
     if not args.passcode:
         ap.error("--passcode (or PAS_GATE_PASSCODE) is required")
@@ -176,13 +172,24 @@ def main() -> None:
         else:
             shutil.copy2(src, dest)
 
-    if args.include_pdf_plaintext:
-        for d in ("pdf", "slides"):
-            src = ROOT / d
-            if src.exists():
-                shutil.copytree(src, out / d)
-        print("WARNING: pdf/ and slides/ copied in PLAINTEXT — local preview "
-              "only, do not publish this staging dir until PDF encryption lands")
+    # 2b. Encrypted binaries: each PDF ships as <name>.pdf.enc
+    #     (12-byte GCM nonce ‖ ciphertext); assets/pas-pdf.js decrypts.
+    n_pdf = 0
+    for d in ("pdf", "slides"):
+        src_dir = ROOT / d
+        if not src_dir.exists():
+            continue
+        for src in sorted(src_dir.glob("*.pdf")):
+            if src.stat().st_size > 95 * 1024 * 1024:
+                print(f"  SKIP {src.relative_to(ROOT)} (exceeds GitHub's 100MB file limit)")
+                continue
+            nonce = os.urandom(12)
+            ct = AESGCM(key).encrypt(nonce, src.read_bytes(), None)
+            dest = out / d / (src.name + ".enc")
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            dest.write_bytes(nonce + ct)
+            n_pdf += 1
+    print(f"encrypted {n_pdf} PDFs")
 
     # 3. Gate page: fill canary + KDF parameters into the template.
     gate_src = (ROOT / "gate.html").read_text(encoding="utf-8")

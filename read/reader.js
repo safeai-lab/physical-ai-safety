@@ -11,7 +11,6 @@
   var frame = document.getElementById("pdf-frame");
   var placeholder = document.getElementById("placeholder");
   var paneTitle = document.getElementById("pane-title");
-  var openTab = document.getElementById("open-tab");
   var prevBtn = document.getElementById("prev-ch");
   var nextBtn = document.getElementById("next-ch");
   var side = document.getElementById("side");
@@ -28,18 +27,17 @@
   var STR = {
     en: {
       site: "Physical AI Safety",
-      sideSub: "The Book and CMU Course<br>by Ding Zhao",
+      sideSub: "The Book<br>by Ding Zhao",
       pdfSoon: "⬇ Full PDF — coming soon",
       pdfGet: "⬇ Download the full PDF",
       home: "← Book homepage",
       chaptersBtn: "☰ Chapters",
-      openTab: "Open in new tab ↗",
       htmlSoon: "HTML edition not posted yet",
       prev: "← Prev",
       next: "Next →",
       soon: "soon",
       comingSoon: "Coming soon",
-      phNote: "This chapter posts here as the <strong>Summer 2026 Course Edition</strong>, released chapter by chapter as the CMU course runs. Until then, here is what it covers:",
+      phNote: "This chapter posts here as the <strong>Summer 2026 Course Edition</strong>, released chapter by chapter as the course runs. Until then, here is what it covers:",
       phLink: "Chapter overview on the homepage →",
       discussPrefix: "Discuss ",
       discussSub: 'Questions, corrections, and ideas are welcome — comments are backed by <a id="discuss-gh" href="https://github.com/safeai-lab/physical-ai-safety/discussions" target="_blank" rel="noopener">GitHub Discussions</a> (sign in with GitHub to post).',
@@ -49,18 +47,17 @@
     },
     zh: {
       site: "物理AI安全",
-      sideSub: "教材与 CMU 课程<br>作者 Ding Zhao",
+      sideSub: "教材<br>作者 Ding Zhao",
       pdfSoon: "⬇ 完整 PDF —— 即将上线",
       pdfGet: "⬇ 下载完整 PDF",
       home: "← 返回图书主页",
       chaptersBtn: "☰ 章节",
-      openTab: "新标签页打开 ↗",
       htmlSoon: "HTML 版尚未发布",
-      prev: "← 上一章",
-      next: "下一章 →",
+      prev: "← 上一节",
+      next: "下一节 →",
       soon: "即将",
       comingSoon: "即将发布",
-      phNote: "本章将作为<strong>2026 夏季课程版</strong>在此发布，随 CMU 课程进度逐章上线。在此之前，本章内容概览：",
+      phNote: "本章将作为<strong>2026 夏季课程版</strong>在此发布，随课程进度逐章上线。在此之前，本章内容概览：",
       phLink: "主页上的章节总览 →",
       discussPrefix: "讨论：",
       discussSub: '欢迎提问、勘误与建议 —— 评论由 <a id="discuss-gh" href="https://github.com/safeai-lab/physical-ai-safety/discussions" target="_blank" rel="noopener">GitHub Discussions</a> 提供支持（使用 GitHub 登录后发言）。',
@@ -149,7 +146,10 @@
   var fullLink = document.getElementById("full-pdf-link");
   function updateFullLink() {
     if (full.available) {
-      fullLink.href = full.file;
+      if (!fullLink.dataset.wired) {
+        window.pasPdf.wireDownload(fullLink, full.file, "physical-ai-safety.pdf");
+        fullLink.dataset.wired = "1";
+      }
       fullLink.removeAttribute("aria-disabled");
       fullLink.textContent = L().pdfGet;
     } else {
@@ -166,7 +166,6 @@
     home.textContent = L().home;
     home.href = homeHref();
     sideToggle.textContent = L().chaptersBtn;
-    openTab.textContent = L().openTab;
     prevBtn.textContent = L().prev;
     nextBtn.textContent = L().next;
     if (langBtn) langBtn.textContent = L().toggle;
@@ -221,18 +220,16 @@
       frame.src = htmlSrc;
       frame.hidden = false;
       placeholder.hidden = true;
-      openTab.href = htmlSrc;
-      openTab.hidden = false;
     } else if (ch.available) {
-      frame.src = ch.file + "#view=FitH";
       frame.hidden = false;
       placeholder.hidden = true;
-      openTab.href = ch.file;
-      openTab.hidden = false;
+      frame.removeAttribute("src");
+      window.pasPdf.src(ch.file).then(function (u) {
+        frame.src = u + "#view=FitH";
+      }).catch(function () {});
     } else {
       frame.hidden = true;
       frame.removeAttribute("src");
-      openTab.hidden = true;
       placeholder.hidden = false;
       document.getElementById("ph-eyebrow").textContent =
         ch.num === "—" || ch.num === "A" ? L().comingSoon
@@ -248,8 +245,7 @@
       });
     }
 
-    prevBtn.disabled = i <= 0;
-    nextBtn.disabled = i >= chapters.length - 1;
+    prevBtn.disabled = nextBtn.disabled = !useHtml;
     side.classList.remove("open");
     mountDiscussion(ch);
   }
@@ -276,20 +272,49 @@
     });
   }
 
-  function go(delta) {
-    var i = idx(currentId()) + delta;
-    if (i >= 0 && i < chapters.length) location.hash = chapters[i].id;
+  // Prev/Next move between sections (h2 headings) inside the open chapter.
+  function jumpSection(delta) {
+    var doc = frame.contentDocument, win = frame.contentWindow;
+    if (frame.hidden || !doc || !win) return;
+    var hs = doc.querySelectorAll("h2");
+    if (!hs.length) return;
+    var y = win.pageYOffset || 0;
+    var tops = [];
+    for (var k = 0; k < hs.length; k++) {
+      tops.push(hs[k].getBoundingClientRect().top + y - 8);
+    }
+    var cur = -1;
+    for (k = 0; k < tops.length; k++) { if (tops[k] <= y + 2) cur = k; }
+    var target;
+    if (delta > 0) target = cur + 1;
+    else target = (cur >= 0 && y > tops[cur] + 40) ? cur : cur - 1;
+    if (target >= tops.length) return;
+    win.scrollTo({ top: target < 0 ? 0 : tops[target], behavior: "smooth" });
   }
 
-  prevBtn.addEventListener("click", function () { go(-1); });
-  nextBtn.addEventListener("click", function () { go(1); });
+  prevBtn.addEventListener("click", function () { jumpSection(-1); });
+  nextBtn.addEventListener("click", function () { jumpSection(1); });
   document.addEventListener("keydown", function (e) {
     if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
-    if (e.key === "ArrowLeft") go(-1);
-    if (e.key === "ArrowRight") go(1);
+    if (e.key === "ArrowLeft") jumpSection(-1);
+    if (e.key === "ArrowRight") jumpSection(1);
   });
+
+  // Sidebar toggle: overlay on small screens, collapse on desktop
+  var reader = document.querySelector(".reader");
+  var mobile = window.matchMedia("(max-width: 52rem)");
+  try {
+    if (localStorage.getItem("pas-side") === "collapsed") {
+      reader.classList.add("collapsed");
+    }
+  } catch (e) {}
   sideToggle.addEventListener("click", function () {
-    side.classList.toggle("open");
+    if (mobile.matches) { side.classList.toggle("open"); return; }
+    reader.classList.toggle("collapsed");
+    try {
+      localStorage.setItem("pas-side",
+        reader.classList.contains("collapsed") ? "collapsed" : "");
+    } catch (e) {}
   });
 
   window.addEventListener("hashchange", render);
@@ -301,14 +326,10 @@
   // a chapter only requires committing its PDF — no manifest flag edits.
   // Skipped under file:// (fetch cannot probe local files there).
   function probe(entry, onUpgrade) {
-    try {
-      fetch(entry.file, { method: "HEAD" }).then(function (res) {
-        if (res.ok) {
-          entry.available = true;
-          onUpgrade();
-        }
-      }).catch(function () { /* not posted yet */ });
-    } catch (err) { /* fetch unsupported */ }
+    window.pasPdf.probe(entry.file, function () {
+      entry.available = true;
+      onUpgrade();
+    });
   }
 
   function probeUrl(url, onOk) {
