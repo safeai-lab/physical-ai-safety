@@ -47,23 +47,21 @@
 <div class="card" id="card">
   <hr class="rule">
   <h1>Physical AI Safety</h1>
-  <p class="sub">This site is passcode-protected. Enter the access code from the
-     author.<br>本站受口令保护,请输入作者提供的访问口令。</p>
+  <p class="sub">This site is passcode-protected. Enter the access code from the author.</p>
   <form id="f">
-    <label for="pw">Passcode / 口令</label>
+    <label for="pw">Passcode</label>
     <div class="row">
       <input type="password" id="pw" autocomplete="current-password" autofocus>
-      <button id="go" type="submit">Unlock / 解锁</button>
+      <button id="go" type="submit">Unlock</button>
     </div>
     <label class="remember">
       <input type="checkbox" id="remember" checked>
-      Remember on this device / 在此设备上记住
+      Remember on this device
     </label>
     <p class="msg" id="msg"></p>
   </form>
   <p class="foot">Ding Zhao · Carnegie Mellon University<br>
-     Access implies agreement not to redistribute pre-publication content.
-     获得访问即表示同意不传播未出版内容。</p>
+     Access implies agreement not to redistribute pre-publication content.</p>
 </div>
 
 <script>
@@ -136,7 +134,7 @@
     if (!pw.value) return;
     go.disabled = true;
     msg.className = "msg";
-    msg.textContent = "Deriving key… 正在派生密钥…";
+    msg.textContent = "Deriving key…";
     deriveBits(pw.value).then(function (bits) {
       return canaryOk(bits).then(function (ok) {
         if (!ok) throw new Error("bad passcode");
@@ -145,13 +143,13 @@
           if (remember.checked) { localStorage.setItem("pas-key", enc); }
           else { sessionStorage.setItem("pas-key", enc); }
         } catch (e) {}
-        msg.textContent = "Unlocked. 已解锁,正在跳转…";
+        msg.textContent = "Unlocked. Redirecting…";
         location.replace(returnTarget());
       });
     }).catch(function () {
       go.disabled = false;
       msg.className = "msg err";
-      msg.textContent = "Incorrect passcode. 口令不正确,请重试。";
+      msg.textContent = "Incorrect passcode. Please try again.";
       card.classList.remove("shake"); void card.offsetWidth;
       card.classList.add("shake");
       pw.select();
