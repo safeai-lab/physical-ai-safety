@@ -46,14 +46,15 @@ def join(ch):
             text.append(open(zh, encoding="utf-8").read())
     html = "".join(text)
 
+    label = f"{t['num']} · {t['title']}" if t["num"] else t["title"]
     html = html.replace('<html lang="en">', '<html lang="zh-CN">', 1)
     html = re.sub(r"<title>.*?</title>",
-                  f"<title>{t['num']} · {t['title']} — 物理AI安全 (Physical AI Safety)</title>",
+                  f"<title>{label} — 物理AI安全 (Physical AI Safety)</title>",
                   html, count=1)
     html = re.sub(r'(<span class="site-book">).*?(</span>)',
                   r"\g<1>物理AI安全\g<2>", html, count=1)
     html = re.sub(r'(<span class="site-chapter">).*?(</span>)',
-                  rf"\g<1>{t['num']} · {t['title']}\g<2>", html, count=1)
+                  rf"\g<1>{label}\g<2>", html, count=1)
     html = re.sub(r'(<a class="site-pdf"[^>]*>).*?(</a>)',
                   r"\g<1>PDF 版\g<2>", html, count=1)
     html = html.replace("</head>", FONT_BLOCK + "</head>", 1)

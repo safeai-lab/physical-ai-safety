@@ -14,6 +14,7 @@ window.BOOK = {
       id: "front", num: "—", title: "Front Matter", title_zh: "前言部分",
       subtitle: "Preface · Notation", subtitle_zh: "前言 · 符号表",
       file: "../pdf/physical-ai-safety-front-matter.pdf", available: false,
+      html: "../html/front.html",
       sections: ["Preface", "Acknowledgments", "Notation"],
       sections_zh: ["前言", "致谢", "符号表"]
     },
