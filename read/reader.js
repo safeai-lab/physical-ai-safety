@@ -276,12 +276,22 @@
   function jumpSection(delta) {
     var doc = frame.contentDocument, win = frame.contentWindow;
     if (frame.hidden || !doc || !win) return;
-    var hs = doc.querySelectorAll("h2");
+    // h2 = chapter sections; h1 covers front/back matter, whose parts
+    // (Preface, Notation, …) are unnumbered top-level headings.
+    var hs = doc.querySelectorAll("main h1, main h2");
+    if (!hs.length) hs = doc.querySelectorAll("h1, h2");
     if (!hs.length) return;
+    // Land headings below the chapter page's sticky header bar.
+    var off = 12;
+    var hdr = doc.querySelector(".site-header");
+    if (hdr) {
+      var pos = win.getComputedStyle(hdr).position;
+      if (pos === "sticky" || pos === "fixed") off += hdr.offsetHeight;
+    }
     var y = win.pageYOffset || 0;
     var tops = [];
     for (var k = 0; k < hs.length; k++) {
-      tops.push(hs[k].getBoundingClientRect().top + y - 8);
+      tops.push(hs[k].getBoundingClientRect().top + y - off);
     }
     var cur = -1;
     for (k = 0; k < tops.length; k++) { if (tops[k] <= y + 2) cur = k; }
