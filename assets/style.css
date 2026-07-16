@@ -71,8 +71,8 @@ a:hover { color: var(--accent-deep); }
 }
 .topnav .lang-switch:hover { border-color: var(--accent); }
 @media (max-width: 44rem) {
-  .topnav { display: none; }
-  .topbar .wrap { justify-content: center; }
+  .topbar .wrap { flex-direction: column; gap: 0.35rem; padding-top: 0.5rem; padding-bottom: 0.5rem; }
+  .topnav { flex-wrap: wrap; justify-content: center; row-gap: 0.25rem; column-gap: 0.9rem; font-size: 0.78rem; }
 }
 
 /* ---------- hero ---------- */
