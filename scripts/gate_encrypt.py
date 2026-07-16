@@ -76,7 +76,7 @@ JavaScript. / 本页面需要启用 JavaScript。</p></noscript>
 
 NOT_FOUND = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex">
-<title>Physical AI Safety — A textbook written by Prof. Ding Zhao at CMU</title>
+<title>Physical AI Safety — A Textbook Written by Prof. Ding Zhao at CMU</title>
 <meta property="og:title" content="Physical AI Safety">
 <meta property="og:description" content="The Gateway to Deploying AI in the Real World">
 <meta property="og:image" content="https://physical-ai-safety.org/assets/favicon-512.png">
@@ -132,7 +132,7 @@ def extract_title(html: str) -> str:
     """Generic title for every stub: even chapter names stay behind the gate
     (author decision: entire site, no public surface). The real <title>
     returns the moment the page decrypts."""
-    return "Physical AI Safety — A textbook written by Prof. Ding Zhao at CMU"
+    return "Physical AI Safety — A Textbook Written by Prof. Ding Zhao at CMU"
 
 
 def main() -> None:
