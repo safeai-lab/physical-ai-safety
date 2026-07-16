@@ -43,6 +43,8 @@
       home: "← Book homepage",
       chaptersBtn: "☰ Chapters",
       htmlSoon: "HTML edition not posted yet",
+      pdfPhone: "In-page PDF viewing is unreliable on phones. Open the chapter PDF in its own tab, or switch to the HTML edition.",
+      pdfOpen: "Open the chapter PDF \u2197",
       prev: "← Prev",
       next: "Next →",
       soon: "soon",
@@ -63,6 +65,8 @@
       home: "← 返回图书主页",
       chaptersBtn: "☰ 章节",
       htmlSoon: "HTML 版尚未发布",
+      pdfPhone: "手机上内嵌 PDF 显示不可靠。请在新标签页打开本章 PDF，或切换到 HTML 版。",
+      pdfOpen: "新标签页打开本章 PDF \u2197",
       prev: "← 上一节",
       next: "下一节 →",
       soon: "即将",
@@ -234,6 +238,20 @@
       frame.src = htmlSrc;
       frame.hidden = false;
       placeholder.hidden = true;
+    } else if (ch.available && compactMq.matches) {
+      // Mobile browsers render iframe PDFs as a single frozen page;
+      // hand the decrypted blob to the native viewer instead.
+      frame.hidden = true;
+      frame.removeAttribute("src");
+      placeholder.hidden = false;
+      document.getElementById("ph-eyebrow").textContent = chLabel(ch);
+      document.getElementById("ph-title").textContent = chTitle(ch);
+      document.getElementById("ph-sections").innerHTML = "";
+      document.getElementById("ph-note").textContent = L().pdfPhone;
+      var pl = document.getElementById("ph-link");
+      pl.textContent = L().pdfOpen;
+      pl.href = "#";
+      pl.dataset.pdf = ch.file;
     } else if (ch.available) {
       frame.hidden = false;
       placeholder.hidden = true;
@@ -250,6 +268,11 @@
           : (lang === "zh" ? "第" + ch.num + "章 · " + L().comingSoon
             : "Chapter " + ch.num + " · " + L().comingSoon);
       document.getElementById("ph-title").textContent = chTitle(ch);
+      document.getElementById("ph-note").innerHTML = L().phNote;
+      var plReset = document.getElementById("ph-link");
+      delete plReset.dataset.pdf;
+      plReset.textContent = L().phLink;
+      plReset.href = homeHref("#chapters");
       var ol = document.getElementById("ph-sections");
       ol.innerHTML = "";
       chSections(ch).forEach(function (s) {
@@ -318,6 +341,15 @@
     if (target >= tops.length) return;
     win.scrollTo({ top: target < 0 ? 0 : tops[target], behavior: "smooth" });
   }
+
+  document.getElementById("ph-link").addEventListener("click", function (ev) {
+    var pdf = ev.currentTarget.dataset.pdf;
+    if (!pdf) return;
+    ev.preventDefault();
+    window.pasPdf.src(pdf).then(function (u) {
+      window.open(u, "_blank", "noopener");
+    }).catch(function () {});
+  });
 
   prevBtn.addEventListener("click", function () { jumpSection(-1); });
   nextBtn.addEventListener("click", function () { jumpSection(1); });
