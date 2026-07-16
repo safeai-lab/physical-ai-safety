@@ -6,3 +6,7 @@ pdf/*.pdf
 # HTML edition built from the unpublished manuscript — never commit.
 html/
 slides/*.pdf
+# Local planning docs — may contain the site passcode; never commit.
+docs/plans/
+# Encrypted staging built by scripts/gate_encrypt.py — publish deliberately.
+deploy/
