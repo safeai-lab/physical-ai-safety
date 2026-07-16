@@ -285,10 +285,13 @@
   function jumpSection(delta) {
     var doc = frame.contentDocument, win = frame.contentWindow;
     if (frame.hidden || !doc || !win) return;
-    // h2 = chapter sections; h1 covers front/back matter, whose parts
-    // (Preface, Notation, …) are unnumbered top-level headings.
-    var hs = doc.querySelectorAll("main h1, main h2");
-    if (!hs.length) hs = doc.querySelectorAll("h1, h2");
+    // h2 = chapter sections. The chapter's own h1 title sits at the very
+    // top, so jumping to it barely moves the page — skip it whenever h2
+    // sections exist. Front/back matter have no h2s; there the h1 parts
+    // (Preface, Notation, …) are the jump targets.
+    var hs = doc.querySelectorAll("main h2");
+    if (!hs.length) hs = doc.querySelectorAll("main h1");
+    if (!hs.length) hs = doc.querySelectorAll("h2, h1");
     if (!hs.length) return;
     // Land headings below the chapter page's sticky header bar.
     var off = 12;
