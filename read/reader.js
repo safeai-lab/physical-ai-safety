@@ -29,6 +29,7 @@
       localStorage.setItem("pas-fmt", fmtParam);
     }
   } catch (e) {}
+  var compactMq = window.matchMedia("(max-width: 52rem)");
   var lang = "en";
   try { lang = localStorage.getItem("pas-lang") || "en"; } catch (e) {}
   if (lang !== "zh") lang = "en";
@@ -174,10 +175,14 @@
     var home = document.getElementById("side-home");
     home.textContent = L().home;
     home.href = homeHref();
-    sideToggle.textContent = L().chaptersBtn;
-    prevBtn.textContent = L().prev;
-    nextBtn.textContent = L().next;
-    if (langBtn) langBtn.textContent = L().toggle;
+    // Compact labels on phones: bare glyphs instead of words.
+    var compact = compactMq.matches;
+    sideToggle.textContent = compact ? "\u2630" : L().chaptersBtn;
+    prevBtn.textContent = compact ? "\u2191" : L().prev;
+    nextBtn.textContent = compact ? "\u2193" : L().next;
+    if (langBtn) {
+      langBtn.textContent = compact ? (lang === "zh" ? "EN" : "\u4e2d") : L().toggle;
+    }
     document.getElementById("ph-note").innerHTML = L().phNote;
     var phLink = document.getElementById("ph-link");
     phLink.textContent = L().phLink;
@@ -324,14 +329,13 @@
 
   // Sidebar toggle: overlay on small screens, collapse on desktop
   var reader = document.querySelector(".reader");
-  var mobile = window.matchMedia("(max-width: 52rem)");
   try {
     if (localStorage.getItem("pas-side") === "collapsed") {
       reader.classList.add("collapsed");
     }
   } catch (e) {}
   sideToggle.addEventListener("click", function () {
-    if (mobile.matches) { side.classList.toggle("open"); return; }
+    if (compactMq.matches) { side.classList.toggle("open"); return; }
     reader.classList.toggle("collapsed");
     try {
       localStorage.setItem("pas-side",
@@ -339,6 +343,7 @@
     } catch (e) {}
   });
 
+  try { compactMq.addEventListener("change", applyStatic); } catch (e) {}
   window.addEventListener("hashchange", render);
   applyStatic();
   buildNav();
