@@ -88,6 +88,9 @@ code, pre {
   font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace;
   font-size: 0.86em;
 }
+/* never let anything pan the whole document sideways; wide content
+   (tables, code, display math) scrolls inside its own box instead */
+html, body { overflow-x: hidden; }
 pre {
   background: var(--tint);
   border: 1px solid var(--rule);
@@ -112,6 +115,9 @@ figcaption, .bkalgorithm p:last-child {
   line-height: 1.5;
 }
 figcaption strong, .bkalgorithm p:last-child strong { font-style: normal; }
+@media (max-width: 640px) {
+  table { display: block; overflow-x: auto; }
+}
 /* tables: booktabs-like */
 table {
   border-collapse: collapse;
