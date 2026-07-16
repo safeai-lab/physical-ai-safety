@@ -19,8 +19,8 @@
   var fmtPdf = document.getElementById("fmt-pdf");
   var fmtHtml = document.getElementById("fmt-html");
   var langBtn = document.getElementById("lang-toggle");
-  var fmt = "pdf";
-  try { fmt = localStorage.getItem("pas-fmt") || "pdf"; } catch (e) {}
+  var fmt = "html";
+  try { fmt = localStorage.getItem("pas-fmt") || "html"; } catch (e) {}
   var lang = "en";
   try { lang = localStorage.getItem("pas-lang") || "en"; } catch (e) {}
   if (lang !== "zh") lang = "en";
@@ -211,7 +211,9 @@
     var htmlReady = !!htmlSrc;
     fmtHtml.disabled = !htmlReady;
     fmtHtml.title = htmlReady ? "" : L().htmlSoon;
-    var useHtml = fmt === "html" && htmlReady;
+    // Honor the chosen format, but fall back to the HTML edition rather
+    // than a "coming soon" placeholder when the PDF is not posted yet.
+    var useHtml = htmlReady && (fmt === "html" || !ch.available);
     fmtPdf.setAttribute("aria-pressed", useHtml ? "false" : "true");
     fmtHtml.setAttribute("aria-pressed", useHtml ? "true" : "false");
 
@@ -323,6 +325,10 @@
       if (ch.html) {
         probeUrl(ch.html, function () {
           ch.htmlOk = true;
+          // Readable via HTML: drop the sidebar SOON badge too.
+          var a = document.getElementById("nav-" + ch.id);
+          var badge = a ? a.querySelector(".soon") : null;
+          if (badge) a.removeChild(badge);
           if (currentId() === ch.id) render();
         });
         probeUrl(zhHtmlFile(ch), function () {
