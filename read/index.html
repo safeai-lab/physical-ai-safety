@@ -16,15 +16,15 @@
 
   <aside class="side" id="side">
     <div class="side-head">
-      <a class="side-brand" href="../index.html">Physical AI Safety</a>
-      <p class="side-sub">The Book and CMU Course<br>by Ding Zhao</p>
+      <a class="side-brand" id="side-brand" href="../index.html">Physical AI Safety</a>
+      <p class="side-sub" id="side-sub">The Book and CMU Course<br>by Ding Zhao</p>
     </div>
     <nav class="side-nav" id="chapter-nav" aria-label="Chapters"></nav>
     <div class="side-foot">
       <a id="full-pdf-link" class="side-download" href="#" aria-disabled="true">
         ⬇ Full PDF — coming soon
       </a>
-      <a class="side-home" href="../index.html">← Book homepage</a>
+      <a class="side-home" id="side-home" href="../index.html">← Book homepage</a>
     </div>
   </aside>
 
@@ -34,6 +34,7 @@
       <h1 class="pane-title" id="pane-title">Physical AI Safety</h1>
       <div class="pane-actions">
         <a id="open-tab" href="#" target="_blank" rel="noopener" hidden>Open in new tab ↗</a>
+        <button id="lang-toggle" aria-label="Switch language / 切换语言" lang="zh-CN">中文</button>
         <div class="fmt" role="group" aria-label="Reading format">
           <button id="fmt-pdf" aria-pressed="true">PDF</button>
           <button id="fmt-html" aria-pressed="false" disabled title="HTML edition not posted yet">HTML</button>
@@ -49,14 +50,14 @@
       <div class="placeholder" id="placeholder">
         <p class="ph-eyebrow" id="ph-eyebrow">Chapter</p>
         <h2 id="ph-title"></h2>
-        <p class="ph-note">
+        <p class="ph-note" id="ph-note">
           This chapter posts here as the <strong>Summer 2026 Course Edition</strong>,
           released chapter by chapter as the CMU course runs.
           Until then, here is what it covers:
         </p>
         <ol class="ph-sections" id="ph-sections"></ol>
         <p class="ph-links">
-          <a href="../index.html#chapters">Chapter overview on the homepage →</a>
+          <a id="ph-link" href="../index.html#chapters">Chapter overview on the homepage →</a>
         </p>
       </div>
     </div>
@@ -64,7 +65,7 @@
     <section class="discuss" aria-label="Chapter discussion">
       <div class="discuss-inner">
         <h2 id="discuss-title">Discuss this chapter</h2>
-        <p class="discuss-sub">
+        <p class="discuss-sub" id="discuss-sub">
           Questions, corrections, and ideas are welcome — comments are backed by
           <a id="discuss-gh" href="https://github.com/safeai-lab/physical-ai-safety/discussions"
              target="_blank" rel="noopener">GitHub Discussions</a>

@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>《物理AI安全》——Ding Zhao 主讲的教材与卡内基梅隆大学课程</title>
+  <meta name="description" content="《物理AI安全：将AI部署到现实世界的门径》（Physical AI Safety: The Gateway to Deploying AI in the Real World）。Ding Zhao 撰写的研究生教材与卡内基梅隆大学课程，涵盖鲁棒性、泛化、约束安全、基础模型安全、罕见事件认证，以及作用于物理世界的AI系统的监管。">
+  <meta property="og:title" content="物理AI安全">
+  <meta property="og:description" content="Ding Zhao 撰写的教材与卡内基梅隆大学课程——将不确定性、分布偏移、约束违反与罕见失效作为一等研究对象的数学工具。">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    body { font-family: "Source Sans 3", "Noto Sans SC", "PingFang SC", "Helvetica Neue", Arial, sans-serif; }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top">物理AI安全</a>
+    <nav class="topnav" aria-label="Sections">
+      <a href="#book">本书</a>
+      <a href="read/index.html">在线阅读</a>
+      <a href="#chapters">章节</a>
+      <a href="#course">课程</a>
+      <a href="#materials">资料</a>
+      <a href="#cite">引用</a>
+      <a class="lang-switch" href="index.html">English</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ Hero ============ -->
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow"><strong>Ding Zhao</strong> 撰写的教材与卡内基梅隆大学课程</p>
+      <h1>物理AI安全</h1>
+      <p class="booktitle"><span class="subtitle">将AI部署到现实世界的门径</span></p>
+      <p class="pitch">
+        人工智能正在走出屏幕。
+        当模型在物理世界中出错，代价不再是一次糟糕的推荐，
+        而是一台损坏的机器、一次漏诊，或一条人命。本书以统一的框架，构建将
+        不确定性、分布偏移（distribution shift）、约束违反与罕见失效作为
+        一等研究对象的数学工具——弥合AI所能展示的能力与人们可以信赖它去
+        做的事情之间的差距。
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" id="download-book" href="#materials" aria-disabled="true">下载本书 —— 即将上线</a>
+        <a class="btn btn-ghost" href="read/index.html">在线阅读</a>
+        <a class="btn btn-ghost" href="#course">观看课程</a>
+        <a class="btn btn-ghost" href="#materials">幻灯片、习题与代码</a>
+      </div>
+      <p class="version-note" id="version-note">
+        <span class="dot">●</span> 2026年夏季课程版 —— 筹备中。
+        免费PDF将在卡内基梅隆大学课程开课期间发布于此。
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ Stats ============ -->
+  <section class="stats" aria-label="Book at a glance">
+    <div class="wrap">
+      <div class="stat"><div class="n">7</div><div class="l">章</div></div>
+      <div class="stat"><div class="n">455</div><div class="l">页（课程版）</div></div>
+      <div class="stat"><div class="n">68</div><div class="l">道习题，均附解答</div></div>
+      <div class="stat"><div class="n">691</div><div class="l">条参考文献</div></div>
+    </div>
+  </section>
+
+  <!-- ============ About ============ -->
+  <section class="block" id="book">
+    <div class="wrap">
+      <p class="sec-eyebrow">本书简介</p>
+      <h2>弥合部署差距</h2>
+      <p class="lead">
+        自动驾驶汽车、手术助手、仓储车队、家用与工厂机器人：AI正从排序与
+        推荐，走向感知、决策与行动。然而，AI所能展示的能力与人们可以信赖
+        它去做的事情之间，始终存在一道差距。弥合这道差距，不是在开发末尾
+        加一份安全检查表就能解决的问题——它需要一套把失效本身作为研究对
+        象的数学体系。
+      </p>
+      <div class="two-col">
+        <div>
+          <h3>一个框架，七章内容</h3>
+          <p>
+            一个物理AI（physical AI）系统涉及三个数学对象：环境模型、
+            策略（policy），以及人类评估准则。每一章研究其中一个对象的
+            性质，或两个对象之间的相互作用——从有界扰动下的鲁棒性
+            （robustness），到分布偏移下的泛化（generalization）与约束
+            安全，再到认证那些永远无法直接观测到的罕见失效率，以及授权
+            部署的标准与监管。
+          </p>
+          <h3>一条贯穿全书的案例</h3>
+          <p>
+            一台医院移动机械臂贯穿每一章：这同一台机器人，在第2章必须
+            对被欺骗的传感器保持鲁棒，在第6章必须通过十亿分之一失效率
+            的认证，并在第7章被写入部署档案。
+          </p>
+        </div>
+        <div>
+          <h3>适用读者</h3>
+          <p>
+            面向构建、评估或认证用于物理部署的学习型系统的研究生与一线
+            工程师。本书自成体系，可支撑一学期课程，并为机器学习、机器
+            人与控制、安全与监管三类读者分别设计了阅读路径。预备知识刻
+            意保持有限：研究生水平的概率论、线性代数与基础机器学习——
+            其余内容由第1章补齐。
+          </p>
+          <h3>全书习题</h3>
+          <p>
+            每章末尾均附习题，按类型（推导、概念、实现、设计）与难度分
+            类标注。全部68道习题均附完整解答；配套课程材料附有教师解答
+            手册。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Chapters ============ -->
+  <section class="block" id="chapters">
+    <div class="wrap">
+      <p class="sec-eyebrow">目录</p>
+      <h2>七章内容，一条主线</h2>
+      <p class="lead">展开任一章可查看其范围、小节列表，及其发展的方法。</p>
+
+      <div class="toc">
+
+        <details class="ch">
+          <summary>
+            <span class="ch-num">1</span>
+            <span class="ch-title">数学基础</span>
+            <span class="ch-leader"></span>
+            <span class="ch-meta">10道习题</span>
+            <span class="ch-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="ch-body">
+            <p class="ch-hook">支撑每一个物理AI系统的数学工具箱，从深度网络与反向传播（backpropagation），到强化学习（reinforcement learning）与校准后的不确定性。</p>
+            <p class="ch-read"><a href="read/index.html#ch1">在线阅读本章 →</a></p>
+            <p class="ch-sum">
+              定义物理AI（physical AI）——能够感知、决策并作用于物理世界的
+              系统——并阐明其安全问题的特殊之处：不可逆的行动、罕见但后果
+              严重的事件、分布漂移、部分可观测性，以及实时决策。本章构建
+              用于感知的监督学习（supervised learning）工具箱，再构建从
+              模仿学习（imitation learning）到马尔可夫决策过程（Markov
+              Decision Process, MDP）与强化学习的序贯决策（sequential
+              decision-making）工具箱，并以不确定性量化（uncertainty
+              quantification）与校准（calibration）收尾。
+            </p>
+            <div class="ch-cols">
+              <div>
+                <h4>小节</h4>
+                <ol>
+                  <li>物理AI及其安全挑战</li>
+                  <li>深度学习基础</li>
+                  <li>序贯决策</li>
+                  <li>不确定性量化与校准</li>
+                </ol>
+              </div>
+              <div>
+                <h4>核心方法</h4>
+                <div class="tags">
+                  <span class="tag">反向传播与SGD</span>
+                  <span class="tag">模仿学习</span>
+                  <span class="tag">马尔可夫决策过程</span>
+                  <span class="tag">价值方法与策略方法</span>
+                  <span class="tag">贝叶斯滤波</span>
+                  <span class="tag">基于模型的规划</span>
+                  <span class="tag">校准</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="ch">
+          <summary>
+            <span class="ch-num">2</span>
+            <span class="ch-title">鲁棒性</span>
+            <span class="ch-leader"></span>
+            <span class="ch-meta">11道习题</span>
+            <span class="ch-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="ch-body">
+            <p class="ch-hook">对抗者如何攻击物理AI——从难以察觉的像素扰动到激光欺骗LiDAR——以及在最坏情形下仍能守住底线的认证防御（certified defense）。</p>
+            <p class="ch-read"><a href="read/index.html#ch2">在线阅读本章 →</a></p>
+            <p class="ch-sum">
+              鲁棒性（robustness）是系统在给定预算内的最坏扰动下仍保持可
+              接受性能的能力。本章建立鲁棒性概念与威胁模型的分类体系，涵
+              盖从数字规避攻击、物理可实现规避攻击，到数据投毒（data
+              poisoning）与供应链攻陷的各类对抗攻击（adversarial
+              attack），随后发展出各类防御方法——对抗训练、随机平滑、确
+              定性验证、鲁棒MDP——并将它们统一表述为一个共同的极小极大
+              （maximin）问题，最后讨论物理感知中的鲁棒性。
+            </p>
+            <div class="ch-cols">
+              <div>
+                <h4>小节</h4>
+                <ol>
+                  <li>鲁棒性分类体系</li>
+                  <li>对抗攻击</li>
+                  <li>鲁棒性增强</li>
+                  <li>物理感知中的鲁棒性</li>
+                </ol>
+              </div>
+              <div>
+                <h4>核心方法</h4>
+                <div class="tags">
+                  <span class="tag">FGSM与PGD</span>
+                  <span class="tag">物理可实现攻击</span>
+                  <span class="tag">数据投毒与后门</span>
+                  <span class="tag">对抗训练</span>
+                  <span class="tag">随机平滑</span>
+                  <span class="tag">验证（IBP、CROWN）</span>
+                  <span class="tag">分布鲁棒MDP</span>
+                  <span class="tag">传感器融合</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="ch">
+          <summary>
+            <span class="ch-num">3</span>
+            <span class="ch-title">泛化</span>
+            <span class="ch-leader"></span>
+            <span class="ch-meta">8道习题</span>
+            <span class="ch-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="ch-body">
+            <p class="ch-hook">当世界在训练好的智能体脚下发生偏移：用最优传输（optimal transport）度量偏移了多远，并借助因果性（causality）、元学习（meta-learning）与仿真到现实迁移（sim-to-real transfer）实现适应。</p>
+            <p class="ch-read"><a href="read/index.html#ch3">在线阅读本章 →</a></p>
+            <p class="ch-sum">
+              泛化（generalization）安全关注的风险是：在某一任务分布上训
+              练的智能体，在另一任务分布上失效——这是一种比鲁棒性中的有
+              界扰动更大范围的偏移。本章用情境MDP（contextual MDP）形式
+              化任务，引入分布偏移的四类分类体系，用最优传输度量任务间距
+              离并给出目标风险的界，并从三个方向发展适应方法：冻结—新增
+              的持续学习（continual learning）、约束到不变特征的因果方
+              法，以及学会适应的元学习——最后将这些方法应用于仿真到现实
+              迁移与在线任务识别。
+            </p>
+            <div class="ch-cols">
+              <div>
+                <h4>小节</h4>
+                <ol>
+                  <li>泛化问题的形式化</li>
+                  <li>用最优传输度量任务偏移</li>
+                  <li>持续学习：适配器与对称性</li>
+                  <li>基于因果性的泛化</li>
+                  <li>学会适应：元学习与提示</li>
+                  <li>仿真到现实迁移</li>
+                  <li>任务识别与对任务不确定性的鲁棒性</li>
+                </ol>
+              </div>
+              <div>
+                <h4>核心方法</h4>
+                <div class="tags">
+                  <span class="tag">情境MDP</span>
+                  <span class="tag">Wasserstein距离</span>
+                  <span class="tag">Sinkhorn算法</span>
+                  <span class="tag">适配器与群对称性</span>
+                  <span class="tag">结构因果模型</span>
+                  <span class="tag">MAML与Prompt-DT</span>
+                  <span class="tag">域随机化</span>
+                  <span class="tag">Dirichlet过程聚类</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="ch">
+          <summary>
+            <span class="ch-num">4</span>
+            <span class="ch-title">约束安全</span>
+            <span class="ch-leader"></span>
+            <span class="ch-meta">10道习题</span>
+            <span class="ch-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="ch-body">
+            <p class="ch-hook">从CMDP到控制屏障函数（control barrier function, CBF）——训练遵守安全预算的策略，再在运行时对其加以守护，使“平均意义下安全”变为“在这条轨迹上安全”。</p>
+            <p class="ch-read"><a href="read/index.html#ch4">在线阅读本章 →</a></p>
+            <p class="ch-sum">
+              本章通过约束马尔可夫决策过程（constrained MDP, CMDP），将
+              安全表述为序贯决策中的显式约束，并发展出在线求解与基于离线
+              数据求解该问题的方法：拉格朗日对偶、信赖域（trust
+              region）、基于推断的方法，以及离线悲观方法。本章的核心是一
+              套部署架构，它借助控制理论滤波器与运行时保障（runtime
+              assurance），把训练阶段的期望级安全界转化为逐状态的运行时
+              安全——学习到的策略负责提议，守护器负责裁决。
+            </p>
+            <div class="ch-cols">
+              <div>
+                <h4>小节</h4>
+                <ol>
+                  <li>约束安全的形式化</li>
+                  <li>原始–对偶方法与信赖域方法</li>
+                  <li>作为推断的约束学习</li>
+                  <li>基于离线数据的约束学习</li>
+                  <li>约束安全的鲁棒性与适应性</li>
+                  <li>运行时安全：控制理论方法</li>
+                </ol>
+              </div>
+              <div>
+                <h4>核心方法</h4>
+                <div class="tags">
+                  <span class="tag">约束MDP</span>
+                  <span class="tag">PID-拉格朗日方法</span>
+                  <span class="tag">约束策略优化</span>
+                  <span class="tag">离线安全强化学习</span>
+                  <span class="tag">控制屏障函数</span>
+                  <span class="tag">Hamilton–Jacobi可达性</span>
+                  <span class="tag">Simplex／运行时保障</span>
+                  <span class="tag">OOD监测</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="ch">
+          <summary>
+            <span class="ch-num">5</span>
+            <span class="ch-title">基础模型安全</span>
+            <span class="ch-leader"></span>
+            <span class="ch-meta">9道习题</span>
+            <span class="ch-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="ch-body">
+            <p class="ch-hook">当一个通用模型驱动真实执行器：剖析视觉-语言-动作（VLA）模型的失效模式，并用测试环境、对齐（alignment）与运行时护栏（guardrail）分层遏制它们。</p>
+            <p class="ch-read"><a href="read/index.html#ch5">在线阅读本章 →</a></p>
+            <p class="ch-sum">
+              本章将基础模型（foundation model）视为物理控制器——即把摄
+              像头图像与语言指令映射为电机指令的视觉-语言-动作（VLA）模
+              型——并考察其失效渠道：感知幻觉（hallucination）、指令误
+              解、具身分布偏移，以及对抗性场景注入。本章为用作测试环境的
+              生成式世界模型建立一套四要素词汇表，发展从RLHF到DPO及可验
+              证奖励的对齐微调数学，并以分层运行时护栏、有原则的让权
+              （deference），以及红队测试（red teaming）证据究竟能为安
+              全论证（safety case）确立什么作结。
+            </p>
+            <div class="ch-cols">
+              <div>
+                <h4>小节</h4>
+                <ol>
+                  <li>作为物理控制器的基础模型</li>
+                  <li>视觉-语言-动作架构与失效模式</li>
+                  <li>生成式世界模型剖析</li>
+                  <li>作为测试环境的世界模型</li>
+                  <li>动作策略的对齐与偏好优化</li>
+                  <li>运行时护栏与让权</li>
+                  <li>评估、红队测试与证据</li>
+                </ol>
+              </div>
+              <div>
+                <h4>核心方法</h4>
+                <div class="tags">
+                  <span class="tag">VLA模型</span>
+                  <span class="tag">越狱与提示注入</span>
+                  <span class="tag">具身分布偏移</span>
+                  <span class="tag">生成式世界模型</span>
+                  <span class="tag">RLHF与DPO</span>
+                  <span class="tag">GRPO与可验证奖励</span>
+                  <span class="tag">共形让权</span>
+                  <span class="tag">红队测试</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="ch">
+          <summary>
+            <span class="ch-num">6</span>
+            <span class="ch-title">罕见事件认证</span>
+            <span class="ch-leader"></span>
+            <span class="ch-meta">11道习题</span>
+            <span class="ch-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="ch-body">
+            <p class="ch-hook">为那些几乎永远无法被直接观测到的罕见失效认证安全性——从三倍规则（rule of three）到重要性采样（importance sampling），再到把统计证据转化为安全论证的有限样本界。</p>
+            <p class="ch-read"><a href="read/index.html#ch6">在线阅读本章 →</a></p>
+            <p class="ch-sum">
+              本章发展用于认证系统的统计机制，这些系统的失效概率极小，以
+              至于朴素测试需要数十亿次试验。本章先陈述界定证书
+              （certificate）含义的前提，再依次构建从朴素蒙特卡洛（Monte
+              Carlo）方法、具有可证明效率的重要性采样，到可用于高维空间
+              的基于学习的方法的一系列估计器——并分析代理偏差与单边界
+              ——最后讨论有限样本认证判定（verdict），以及从统计证据通
+              往安全标准的路径。
+            </p>
+            <div class="ch-cols">
+              <div>
+                <h4>小节</h4>
+                <ol>
+                  <li>认证问题</li>
+                  <li>失效发现</li>
+                  <li>蒙特卡洛方法与重要性采样</li>
+                  <li>高维空间中基于学习的估计</li>
+                  <li>认证判定</li>
+                  <li>从证书到部署</li>
+                </ol>
+              </div>
+              <div>
+                <h4>核心方法</h4>
+                <div class="tags">
+                  <span class="tag">罕见事件估计</span>
+                  <span class="tag">证伪与STL</span>
+                  <span class="tag">重要性采样</span>
+                  <span class="tag">多级分裂</span>
+                  <span class="tag">深度重要性采样</span>
+                  <span class="tag">Clopper–Pearson界</span>
+                  <span class="tag">三倍规则</span>
+                  <span class="tag">共形风险控制</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="ch">
+          <summary>
+            <span class="ch-num">7</span>
+            <span class="ch-title">监管、标准与人类监督</span>
+            <span class="ch-leader"></span>
+            <span class="ch-meta">9道习题</span>
+            <span class="ch-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="ch-body">
+            <p class="ch-hook">数学安全界与机构相遇之处——标准、监管者与保险公司决定一个物理AI系统是否被允许上线。</p>
+            <p class="ch-read"><a href="read/index.html#ch7">在线阅读本章 →</a></p>
+            <p class="ch-sum">
+              本章分三个部分，将前几章的技术证据与授权部署的制度流程连接
+              起来：标准与功能安全（functional safety）主线、人类监督与
+              共享自主（shared autonomy）层面，以及监管、责任与保险构成
+              的问责体系。安全论证（safety case）是汇总前述各章证据的整
+              合性产物；本章以一页式部署档案与该领域的开放问题作结。
+            </p>
+            <div class="ch-cols">
+              <div>
+                <h4>小节</h4>
+                <ol>
+                  <li>标准全景</li>
+                  <li>学习赋能系统的危害分析</li>
+                  <li>AI系统的功能安全</li>
+                  <li>作为整合性产物的安全论证</li>
+                  <li>人类监督工程</li>
+                  <li>共享自主与物理人机交互</li>
+                  <li>具身感知的隐私</li>
+                  <li>物理AI监管·责任·可保性</li>
+                  <li>部署档案</li>
+                  <li>展望：物理AI安全的开放问题</li>
+                </ol>
+              </div>
+              <div>
+                <h4>核心方法</h4>
+                <div class="tags">
+                  <span class="tag">AI功能安全标准</span>
+                  <span class="tag">STPA危害分析</span>
+                  <span class="tag">GSN安全论证</span>
+                  <span class="tag">欧盟《人工智能法案》中的人类监督</span>
+                  <span class="tag">物理人机交互</span>
+                  <span class="tag">责任与可保性</span>
+                  <span class="tag">部署档案</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Course ============ -->
+  <section class="block" id="course">
+    <div class="wrap">
+      <p class="sec-eyebrow">课程</p>
+      <h2>2026年夏季于卡内基梅隆大学现场授课</h2>
+      <p class="lead">
+        本书是卡内基梅隆大学一门研究生课程的主干教材。课程进行期间，讲座
+        将被录制；视频、幻灯片与每周习题将在每次课程结束后数日内发布于
+        此。课程遵循本书的14周设计：两周讲基础，随后每个失效模式章节各
+        两周，并配有课程项目。
+      </p>
+      <div class="course-grid">
+        <table class="plain">
+          <thead>
+            <tr><th>周次</th><th>章</th><th>主题</th><th>幻灯片</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1–2</td><td>1·数学基础</td><td>深度学习、序贯决策、不确定性</td><td><a class="slides-link" id="slides-ch1" href="slides/physical-ai-safety-ch1-slides.pdf" target="_blank" rel="noopener" hidden>PDF ↗</a></td></tr>
+            <tr><td>3–4</td><td>2·鲁棒性</td><td>攻击、防御与认证鲁棒性</td><td><a class="slides-link" id="slides-ch2" href="slides/physical-ai-safety-ch2-slides.pdf" target="_blank" rel="noopener" hidden>PDF ↗</a></td></tr>
+            <tr><td>5–6</td><td>3·泛化</td><td>分布偏移、适应、仿真到现实</td><td><a class="slides-link" id="slides-ch3" href="slides/physical-ai-safety-ch3-slides.pdf" target="_blank" rel="noopener" hidden>PDF ↗</a></td></tr>
+            <tr><td>7–8</td><td>4·约束安全</td><td>安全强化学习与运行时守护</td><td><a class="slides-link" id="slides-ch4" href="slides/physical-ai-safety-ch4-slides.pdf" target="_blank" rel="noopener" hidden>PDF ↗</a></td></tr>
+            <tr><td>9–10</td><td>5·基础模型安全</td><td>VLA模型、世界模型、对齐、护栏</td><td><a class="slides-link" id="slides-ch5" href="slides/physical-ai-safety-ch5-slides.pdf" target="_blank" rel="noopener" hidden>PDF ↗</a></td></tr>
+            <tr><td>11–12</td><td>6·罕见事件认证</td><td>罕见失效的统计认证</td><td><a class="slides-link" id="slides-ch6" href="slides/physical-ai-safety-ch6-slides.pdf" target="_blank" rel="noopener" hidden>PDF ↗</a></td></tr>
+            <tr><td>13–14</td><td>7·监管与监督</td><td>标准、安全论证、人类监督</td><td><a class="slides-link" id="slides-ch7" href="slides/physical-ai-safety-ch7-slides.pdf" target="_blank" rel="noopener" hidden>PDF ↗</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Materials ============ -->
+  <section class="block" id="materials">
+    <div class="wrap">
+      <p class="sec-eyebrow">资料</p>
+      <h2>一站式资料</h2>
+      <p class="lead">
+        本页是唯一入口。PDF、视频与代码分别托管在最适合它们的平台上，发
+        布后都会从这里链接。
+      </p>
+      <div class="cards">
+        <div class="card">
+          <h3>阅读本书</h3>
+          <p>
+            完整书稿以免费PDF形式提供——包含封面、目录、内部链接与引用元
+            数据。可在此下载2026年夏季课程版，也可在
+            <a href="read/index.html">在线阅读器</a>中逐章阅读。每次更
+            新都会保留变更日志，并链接到此前版本。
+          </p>
+          <span class="status" id="pdf-status">PDF · 即将上线</span>
+        </div>
+        <div class="card">
+          <h3>观看课程</h3>
+          <p>
+            卡内基梅隆大学现场课程的完整讲座录像，每次课程一个视频，开头
+            说明本次覆盖的章节，结尾附本周小结与阅读材料。
+          </p>
+          <span class="status">播放列表 · 随课程进行发布</span>
+        </div>
+        <div class="card">
+          <h3>幻灯片、习题与代码</h3>
+          <p>
+            配套的<a href="https://github.com/safeai-lab/physical-ai-safety">GitHub
+            仓库</a>承载本网站，并将包含按讲座划分的文件夹：幻灯片、学
+            生习题、可运行的notebook，以及贯穿全书的医院移动机械臂仿真
+            脚手架。
+          </p>
+          <span class="status live">仓库已上线 · 讲座材料随课程进行陆续添加</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Version history ============ -->
+  <section class="block" id="versions">
+    <div class="wrap">
+      <p class="sec-eyebrow">版本历史</p>
+      <h2>持续更新的书稿</h2>
+      <p class="lead">
+        在线版本持续改进——每次发布及其变更都会列在此处，此前版本也将
+        保持可访问。
+      </p>
+      <div class="course-grid">
+        <table class="plain">
+          <thead>
+            <tr><th>日期</th><th>版本</th><th>说明</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2026-07</td>
+              <td>2026年夏季课程版</td>
+              <td>为卡内基梅隆大学夏季课程准备的中性封面免费版——455页，7章，68道附解答习题——发布于此。</td>
+            </tr>
+            <tr>
+              <td>2026-07-14</td>
+              <td>网站上线</td>
+              <td>课程与图书主页上线。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Cite ============ -->
+  <section class="block" id="cite">
+    <div class="wrap">
+      <p class="sec-eyebrow">引用方式</p>
+      <h2>引用本书</h2>
+      <p class="lead">在正式版本出版之前，请引用在线书稿：</p>
+      <div class="citebox">
+        <button class="copybtn" type="button" data-copy>复制</button>
+        <pre id="bibtex">@book{zhao2026physicalaisafety,
+  author = {Zhao, Ding},
+  title  = {Physical AI Safety: The Gateway to Deploying AI
+            in the Real World},
+  year   = {2026},
+  note   = {Manuscript, Summer 2026 Course Edition},
+  url    = {https://physical-ai-safety.org/}
+}</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Copyright ============ -->
+  <section class="block" id="usage">
+    <div class="wrap">
+      <p class="sec-eyebrow">版权与使用</p>
+      <h2>免费阅读，版权所有</h2>
+      <div class="two-col">
+        <div>
+          <h3>书稿</h3>
+          <p>
+            © 2026 Ding Zhao。保留所有权利。此处发布的PDF可免费阅读、下
+            载，并用于个人学习与课堂教学。请链接到本页面，而非另行托管
+            该文件，以便读者始终能找到最新版本。如需其他用途，请联系作
+            者。
+          </p>
+        </div>
+        <div>
+          <h3>课程材料</h3>
+          <p>
+            幻灯片、习题与代码各自附有独立许可，详见配套仓库。欢迎教师
+            采用这些材料；采用说明将随2026年夏季课程结束时的完整发布一
+            并提供。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="legal">
+      <p><strong>物理AI安全</strong> ——Ding Zhao 撰写的教材与卡内基梅隆大学课程。</p>
+      <p>© 2026 Ding Zhao · <a href="https://safeai-lab.github.io/">Safe AI Lab</a>，卡内基梅隆大学</p>
+    </div>
+    <div>
+      <p><a href="#top">返回顶部 ↑</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Light up all PDF-dependent copy automatically once the full PDF is posted
+  // (same auto-detection as the reader; no-op under file:// or before publish).
+  if (location.protocol !== "file:" && typeof fetch === "function") {
+    fetch("pdf/physical-ai-safety.pdf", { method: "HEAD" }).then(function (res) {
+      if (res.ok) {
+        var btn = document.getElementById("download-book");
+        btn.href = "pdf/physical-ai-safety.pdf";
+        btn.removeAttribute("aria-disabled");
+        btn.textContent = "下载本书（PDF）";
+        var note = document.getElementById("version-note");
+        note.innerHTML = "";
+        var dot = document.createElement("span");
+        dot.className = "dot";
+        dot.textContent = "●";
+        note.appendChild(dot);
+        note.appendChild(document.createTextNode(
+          " 2026年夏季课程版 —— 现已提供免费PDF，" +
+          "可在线逐章阅读。"));
+        document.getElementById("pdf-status").textContent =
+          "PDF · 2026年夏季课程版，455页";
+        document.getElementById("pdf-status").classList.add("live");
+      }
+    }).catch(function () { /* not posted yet */ });
+
+    // Per-chapter slide decks: reveal each link only when its PDF exists.
+    for (var ch = 1; ch <= 7; ch++) {
+      (function (n) {
+        var link = document.getElementById("slides-ch" + n);
+        if (!link) { return; }
+        fetch("slides/physical-ai-safety-ch" + n + "-slides.pdf", { method: "HEAD" })
+          .then(function (res) {
+            if (res.ok) { link.removeAttribute("hidden"); }
+          })
+          .catch(function () { /* deck not posted yet */ });
+      })(ch);
+    }
+  }
+
+  document.querySelector("[data-copy]").addEventListener("click", function () {
+    var text = document.getElementById("bibtex").innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var btn = document.querySelector("[data-copy]");
+      btn.textContent = "已复制";
+      setTimeout(function () { btn.textContent = "复制"; }, 1600);
+    });
+  });
+</script>
+
+</body>
+</html>
