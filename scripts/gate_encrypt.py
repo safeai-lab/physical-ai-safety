@@ -58,6 +58,9 @@ STUB_TEMPLATE = """<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>{title}</title>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 </head>
 <body style="margin:0;background:#faf9f7">
 <script>window.__PAS_PAYLOAD={payload};</script>
@@ -71,6 +74,9 @@ JavaScript. / 本页面需要启用 JavaScript。</p></noscript>
 NOT_FOUND = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex">
 <title>Physical AI Safety</title>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <style>body{font-family:sans-serif;background:#faf9f7;color:#1a1a1a;
 display:flex;min-height:100vh;align-items:center;justify-content:center}
 a{color:#C41230}</style></head><body>
