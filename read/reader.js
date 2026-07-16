@@ -187,7 +187,7 @@
 
   function currentId() {
     var h = location.hash.replace("#", "");
-    return idx(h) >= 0 ? h : chapters[1] ? chapters[1].id : chapters[0].id;
+    return idx(h) >= 0 ? h : chapters[0].id;
   }
 
   function render() {
