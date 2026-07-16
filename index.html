@@ -18,9 +18,12 @@
 <header class="topbar">
   <div class="wrap">
     <a class="brand" href="#top">Physical AI Safety</a>
-    <nav class="topnav" aria-label="Sections">
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="topnav">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="topnav" id="topnav" aria-label="Sections">
       <a href="#book">The Book</a>
-      <a href="read/index.html">Read Online</a>
+      <a href="read/index.html?fmt=html">Read Online</a>
       <a href="#chapters">Chapters</a>
       <a href="#course">Course</a>
       <a href="#materials">Materials</a>
@@ -48,7 +51,7 @@
         it can be trusted to do.
       </p>
       <div class="cta-row">
-        <a class="btn btn-primary" href="read/index.html">Read Online</a>
+        <a class="btn btn-primary" href="read/index.html?fmt=html">Read Online</a>
         <a class="btn btn-ghost" href="#course">Watch the Course</a>
         <a class="btn btn-ghost" href="#materials">Slides, Exercises &amp; Code</a>
         <a class="btn btn-ghost" id="download-book" href="#materials" aria-disabled="true">Download the Book — coming soon</a>
@@ -164,7 +167,7 @@
           </summary>
           <div class="ch-body">
             <p class="ch-hook">The mathematical toolkit behind every physical AI system, from deep networks and backpropagation to reinforcement learning and calibrated uncertainty.</p>
-            <p class="ch-read"><a href="read/index.html#ch1">Read this chapter online →</a></p>
+            <p class="ch-read"><a href="read/index.html?fmt=html#ch1">Read this chapter online →</a></p>
             <p class="ch-sum">
               Defines physical AI — systems that sense, decide, and act in the physical
               world — and what makes its safety problem distinctive: irreversible actions,
@@ -210,7 +213,7 @@
           </summary>
           <div class="ch-body">
             <p class="ch-hook">How adversaries attack physical AI, from imperceptible pixels to laser-spoofed LiDAR — and the certified defenses that hold the line under the worst case.</p>
-            <p class="ch-read"><a href="read/index.html#ch2">Read this chapter online →</a></p>
+            <p class="ch-read"><a href="read/index.html?fmt=html#ch2">Read this chapter online →</a></p>
             <p class="ch-sum">
               Robustness is a system's ability to hold acceptable performance under
               worst-case disturbances within a stated budget. The chapter builds a
@@ -257,7 +260,7 @@
           </summary>
           <div class="ch-body">
             <p class="ch-hook">When the world shifts out from under a trained agent: measure how far it moved with optimal transport, and adapt with causality, meta-learning, and sim-to-real transfer.</p>
-            <p class="ch-read"><a href="read/index.html#ch3">Read this chapter online →</a></p>
+            <p class="ch-read"><a href="read/index.html?fmt=html#ch3">Read this chapter online →</a></p>
             <p class="ch-sum">
               Generalization safety is the risk that an agent trained on one task
               distribution fails on another — a larger regime of shift than the bounded
@@ -308,7 +311,7 @@
           </summary>
           <div class="ch-body">
             <p class="ch-hook">From CMDPs to control barrier functions — training policies that respect safety budgets, then guarding them at runtime so "safe on average" becomes "safe on this trajectory."</p>
-            <p class="ch-read"><a href="read/index.html#ch4">Read this chapter online →</a></p>
+            <p class="ch-read"><a href="read/index.html?fmt=html#ch4">Read this chapter online →</a></p>
             <p class="ch-sum">
               Formulates safety as explicit constraints in sequential decision making
               via the constrained Markov Decision Process, and develops the methods that
@@ -357,7 +360,7 @@
           </summary>
           <div class="ch-body">
             <p class="ch-hook">When a generalist model drives a real actuator: dissecting vision-language-action failure modes and layering test environments, alignment, and runtime guardrails to contain them.</p>
-            <p class="ch-read"><a href="read/index.html#ch5">Read this chapter online →</a></p>
+            <p class="ch-read"><a href="read/index.html?fmt=html#ch5">Read this chapter online →</a></p>
             <p class="ch-sum">
               Examines foundation models as physical controllers — vision-language-action
               models that map camera images and language instructions to motor commands —
@@ -409,7 +412,7 @@
           </summary>
           <div class="ch-body">
             <p class="ch-hook">Certifying safety for failures too rare to ever observe — from the rule of three to importance sampling and finite-sample bounds that turn statistical evidence into a safety case.</p>
-            <p class="ch-read"><a href="read/index.html#ch6">Read this chapter online →</a></p>
+            <p class="ch-read"><a href="read/index.html?fmt=html#ch6">Read this chapter online →</a></p>
             <p class="ch-sum">
               Develops the statistical machinery for certifying systems whose failure
               probabilities are so small that naive testing would demand billions of
@@ -459,7 +462,7 @@
           </summary>
           <div class="ch-body">
             <p class="ch-hook">Where mathematical safety bounds meet the institutions — standards, regulators, and insurers — that decide whether a physical AI system is allowed to ship.</p>
-            <p class="ch-read"><a href="read/index.html#ch7">Read this chapter online →</a></p>
+            <p class="ch-read"><a href="read/index.html?fmt=html#ch7">Read this chapter online →</a></p>
             <p class="ch-sum">
               Connects the technical evidence of the earlier chapters to the
               institutional process that authorizes deployment, in three movements:
@@ -552,7 +555,7 @@
             The complete manuscript as a free PDF — cover, table of contents, internal
             links, and citation metadata included. Downloadable here as the Summer 2026
             Course Edition and readable chapter by chapter in the
-            <a href="read/index.html">online reader</a>. Each update keeps a
+            <a href="read/index.html?fmt=html">online reader</a>. Each update keeps a
             changelog and links to prior versions.
           </p>
           <span class="status" id="pdf-status">PDF · coming soon</span>
@@ -711,6 +714,23 @@
         });
       })(ch);
     }
+  }
+
+
+  var navToggle = document.getElementById("nav-toggle");
+  var topnav = document.querySelector(".topnav");
+  if (navToggle && topnav) {
+    navToggle.addEventListener("click", function () {
+      var open = topnav.classList.toggle("open");
+      navToggle.classList.toggle("open", open);
+      navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    topnav.addEventListener("click", function (e) {
+      if (e.target.tagName !== "A") return;
+      topnav.classList.remove("open");
+      navToggle.classList.remove("open");
+      navToggle.setAttribute("aria-expanded", "false");
+    });
   }
 
   document.querySelector("[data-copy]").addEventListener("click", function () {

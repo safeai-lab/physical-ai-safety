@@ -20,6 +20,15 @@
   var langBtn = document.getElementById("lang-toggle");
   var fmt = "html";
   try { fmt = localStorage.getItem("pas-fmt") || "html"; } catch (e) {}
+  // Entry links can force a format (e.g. Read Online -> ?fmt=html),
+  // overriding and replacing the stored preference.
+  try {
+    var fmtParam = new URLSearchParams(location.search).get("fmt");
+    if (fmtParam === "html" || fmtParam === "pdf") {
+      fmt = fmtParam;
+      localStorage.setItem("pas-fmt", fmtParam);
+    }
+  } catch (e) {}
   var lang = "en";
   try { lang = localStorage.getItem("pas-lang") || "en"; } catch (e) {}
   if (lang !== "zh") lang = "en";

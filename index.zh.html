@@ -22,9 +22,12 @@
 <header class="topbar">
   <div class="wrap">
     <a class="brand" href="#top">物理AI安全</a>
-    <nav class="topnav" aria-label="Sections">
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="topnav">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="topnav" id="topnav" aria-label="Sections">
       <a href="#book">本书</a>
-      <a href="read/index.html">在线阅读</a>
+      <a href="read/index.html?fmt=html">在线阅读</a>
       <a href="#chapters">章节</a>
       <a href="#course">课程</a>
       <a href="#materials">资料</a>
@@ -51,7 +54,7 @@
         做的事情之间的差距。
       </p>
       <div class="cta-row">
-        <a class="btn btn-primary" href="read/index.html">在线阅读</a>
+        <a class="btn btn-primary" href="read/index.html?fmt=html">在线阅读</a>
         <a class="btn btn-ghost" href="#course">观看课程</a>
         <a class="btn btn-ghost" href="#materials">幻灯片、习题与代码</a>
         <a class="btn btn-ghost" id="download-book" href="#materials" aria-disabled="true">下载本书 —— 即将上线</a>
@@ -159,7 +162,7 @@
           </summary>
           <div class="ch-body">
             <p class="ch-hook">支撑每一个物理AI系统的数学工具箱，从深度网络与反向传播（backpropagation），到强化学习（reinforcement learning）与校准后的不确定性。</p>
-            <p class="ch-read"><a href="read/index.html#ch1">在线阅读本章 →</a></p>
+            <p class="ch-read"><a href="read/index.html?fmt=html#ch1">在线阅读本章 →</a></p>
             <p class="ch-sum">
               定义物理AI（physical AI）——能够感知、决策并作用于物理世界的
               系统——并阐明其安全问题的特殊之处：不可逆的行动、罕见但后果
@@ -206,7 +209,7 @@
           </summary>
           <div class="ch-body">
             <p class="ch-hook">对抗者如何攻击物理AI——从难以察觉的像素扰动到激光欺骗LiDAR——以及在最坏情形下仍能守住底线的认证防御（certified defense）。</p>
-            <p class="ch-read"><a href="read/index.html#ch2">在线阅读本章 →</a></p>
+            <p class="ch-read"><a href="read/index.html?fmt=html#ch2">在线阅读本章 →</a></p>
             <p class="ch-sum">
               鲁棒性（robustness）是系统在给定预算内的最坏扰动下仍保持可
               接受性能的能力。本章建立鲁棒性概念与威胁模型的分类体系，涵
@@ -253,7 +256,7 @@
           </summary>
           <div class="ch-body">
             <p class="ch-hook">当世界在训练好的智能体脚下发生偏移：用最优传输（optimal transport）度量偏移了多远，并借助因果性（causality）、元学习（meta-learning）与仿真到现实迁移（sim-to-real transfer）实现适应。</p>
-            <p class="ch-read"><a href="read/index.html#ch3">在线阅读本章 →</a></p>
+            <p class="ch-read"><a href="read/index.html?fmt=html#ch3">在线阅读本章 →</a></p>
             <p class="ch-sum">
               泛化（generalization）安全关注的风险是：在某一任务分布上训
               练的智能体，在另一任务分布上失效——这是一种比鲁棒性中的有
@@ -304,7 +307,7 @@
           </summary>
           <div class="ch-body">
             <p class="ch-hook">从CMDP到控制屏障函数（control barrier function, CBF）——训练遵守安全预算的策略，再在运行时对其加以守护，使“平均意义下安全”变为“在这条轨迹上安全”。</p>
-            <p class="ch-read"><a href="read/index.html#ch4">在线阅读本章 →</a></p>
+            <p class="ch-read"><a href="read/index.html?fmt=html#ch4">在线阅读本章 →</a></p>
             <p class="ch-sum">
               本章通过约束马尔可夫决策过程（constrained MDP, CMDP），将
               安全表述为序贯决策中的显式约束，并发展出在线求解与基于离线
@@ -353,7 +356,7 @@
           </summary>
           <div class="ch-body">
             <p class="ch-hook">当一个通用模型驱动真实执行器：剖析视觉-语言-动作（VLA）模型的失效模式，并用测试环境、对齐（alignment）与运行时护栏（guardrail）分层遏制它们。</p>
-            <p class="ch-read"><a href="read/index.html#ch5">在线阅读本章 →</a></p>
+            <p class="ch-read"><a href="read/index.html?fmt=html#ch5">在线阅读本章 →</a></p>
             <p class="ch-sum">
               本章将基础模型（foundation model）视为物理控制器——即把摄
               像头图像与语言指令映射为电机指令的视觉-语言-动作（VLA）模
@@ -404,7 +407,7 @@
           </summary>
           <div class="ch-body">
             <p class="ch-hook">为那些几乎永远无法被直接观测到的罕见失效认证安全性——从三倍规则（rule of three）到重要性采样（importance sampling），再到把统计证据转化为安全论证的有限样本界。</p>
-            <p class="ch-read"><a href="read/index.html#ch6">在线阅读本章 →</a></p>
+            <p class="ch-read"><a href="read/index.html?fmt=html#ch6">在线阅读本章 →</a></p>
             <p class="ch-sum">
               本章发展用于认证系统的统计机制，这些系统的失效概率极小，以
               至于朴素测试需要数十亿次试验。本章先陈述界定证书
@@ -453,7 +456,7 @@
           </summary>
           <div class="ch-body">
             <p class="ch-hook">数学安全界与机构相遇之处——标准、监管者与保险公司决定一个物理AI系统是否被允许上线。</p>
-            <p class="ch-read"><a href="read/index.html#ch7">在线阅读本章 →</a></p>
+            <p class="ch-read"><a href="read/index.html?fmt=html#ch7">在线阅读本章 →</a></p>
             <p class="ch-sum">
               本章分三个部分，将前几章的技术证据与授权部署的制度流程连接
               起来：标准与功能安全（functional safety）主线、人类监督与
@@ -542,7 +545,7 @@
           <p>
             完整书稿以免费PDF形式提供——包含封面、目录、内部链接与引用元
             数据。可在此下载2026年夏季课程版，也可在
-            <a href="read/index.html">在线阅读器</a>中逐章阅读。每次更
+            <a href="read/index.html?fmt=html">在线阅读器</a>中逐章阅读。每次更
             新都会保留变更日志，并链接到此前版本。
           </p>
           <span class="status" id="pdf-status">PDF · 即将上线</span>
@@ -699,6 +702,23 @@
         });
       })(ch);
     }
+  }
+
+
+  var navToggle = document.getElementById("nav-toggle");
+  var topnav = document.querySelector(".topnav");
+  if (navToggle && topnav) {
+    navToggle.addEventListener("click", function () {
+      var open = topnav.classList.toggle("open");
+      navToggle.classList.toggle("open", open);
+      navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    topnav.addEventListener("click", function (e) {
+      if (e.target.tagName !== "A") return;
+      topnav.classList.remove("open");
+      navToggle.classList.remove("open");
+      navToggle.setAttribute("aria-expanded", "false");
+    });
   }
 
   document.querySelector("[data-copy]").addEventListener("click", function () {
