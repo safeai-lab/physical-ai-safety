@@ -1,0 +1,228 @@
+/* chapter.css — HTML edition of Physical AI Safety */
+:root {
+  --paper: #fbfaf7;
+  --ink: #1b2129;
+  --ink-soft: #3d4654;
+  --accent: #c41230;
+  --rule: #d8d5cc;
+  --tint: #f3f1ea;
+  --blue: #0072b2;
+  --teal: #009e73;
+  --orange: #d55e00;
+  --gray: #555555;
+}
+* { box-sizing: border-box; }
+html { font-size: 17px; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.65;
+}
+.site-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.7rem 1.2rem;
+  border-bottom: 2px solid var(--accent);
+  background: #fff;
+  font-size: 0.85rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.site-book {
+  font-family: "STIX Two Text", Georgia, serif;
+  font-weight: 700;
+  color: var(--accent);
+}
+.site-chapter { color: var(--ink-soft); flex: 1 1 auto; }
+.site-pdf {
+  color: var(--accent);
+  text-decoration: none;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 0.1rem 0.6rem;
+  background: var(--paper);
+}
+.site-pdf:hover { border-color: var(--accent); }
+.site-lang {
+  color: var(--ink-soft, #3d4654);
+  text-decoration: none;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 0.1rem 0.6rem;
+  margin-left: 0.5rem;
+  background: var(--paper);
+}
+.site-lang:hover { border-color: var(--accent); color: var(--accent); }
+main.chapter-body {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 2.2rem 1.2rem 4rem;
+}
+h1, h2, h3, h4, h5 {
+  font-family: "STIX Two Text", Georgia, serif;
+  color: var(--ink);
+  line-height: 1.25;
+  margin: 2.2em 0 0.6em;
+}
+h1 {
+  font-size: 2.1rem;
+  margin-top: 1.2em;
+  padding-bottom: 0.4em;
+  border-bottom: 3px double var(--rule);
+}
+h2 { font-size: 1.45rem; }
+h3 { font-size: 1.15rem; }
+h4 { font-size: 1.02rem; }
+h5 { font-size: 1rem; display: inline-block; margin: 1.4em 0 0.2em; }
+h5 + p { margin-top: 0.2em; }
+p { margin: 0 0 1em; }
+a { color: var(--accent); }
+em { color: inherit; }
+strong { color: var(--ink); }
+code, pre {
+  font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  font-size: 0.86em;
+}
+pre {
+  background: var(--tint);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  overflow-x: auto;
+}
+blockquote {
+  font-family: "STIX Two Text", Georgia, serif;
+  color: var(--ink-soft);
+  border-left: 3px solid var(--rule);
+  margin: 1.2em 0;
+  padding: 0.1em 1.2em;
+}
+img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+figure { margin: 2em 0; }
+figcaption, .bkalgorithm p:last-child {
+  color: var(--ink-soft);
+  font-style: italic;
+  font-size: 0.9rem;
+  margin-top: 0.7em;
+  line-height: 1.5;
+}
+figcaption strong, .bkalgorithm p:last-child strong { font-style: normal; }
+/* tables: booktabs-like */
+table {
+  border-collapse: collapse;
+  margin: 1.8em auto;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  max-width: 100%;
+}
+th, td {
+  padding: 0.35em 0.8em;
+  vertical-align: top;
+  text-align: left;
+  border: none;
+}
+thead th {
+  border-top: 2px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  background: #eef3f7;
+}
+tbody tr:last-child td { border-bottom: 2px solid var(--ink); }
+tbody tr:nth-child(even) { background: #f4f3ef; }
+/* theorem-like boxes */
+.bktheorem, .bkdefinition, .bklemma, .bkproposition, .bkcorollary,
+.bkremark, .bkassumption, .bkclaim, .bkexercise, .bkexample,
+.bkcallout, .bkevidence, .bklimits, .bkchecklist, .bkalgorithm,
+.algorithm, .bkplaceholder {
+  background: var(--tint);
+  border-left: 4px solid var(--blue);
+  border-radius: 0 6px 6px 0;
+  padding: 0.9rem 1.1rem 0.6rem;
+  margin: 1.6em 0;
+}
+.bkexample { border-left-color: var(--gray); }
+.bkremark { border-left-color: var(--gray); }
+.bkcallout, .bkevidence { border-left-color: var(--teal); }
+.bklimits { border-left-color: var(--orange); }
+.bkchecklist { border-left-color: var(--blue); }
+.bkalgorithm { border-left-color: var(--gray); background: #fff; }
+/* native pseudocode blocks (same family as .bkexample) */
+.algorithm { border-left-color: var(--gray); padding-bottom: 0.9rem; }
+.algorithm > p:first-child {
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  margin-bottom: 0.8em;
+}
+.algorithm > p:first-child strong { color: var(--ink); }
+.algo-code {
+  border-top: 1px solid var(--rule);
+  padding-top: 0.6rem;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+.algo-line {
+  display: flex;
+  align-items: baseline;
+  margin: 0.18rem 0;
+}
+.algo-no {
+  flex: 0 0 2.4ch;
+  text-align: right;
+  margin-right: 1.2ch;
+  font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  font-size: 0.72rem;
+  color: #9a958a;
+  user-select: none;
+}
+.algo-stmt {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding-left: calc(var(--d, 0) * 2ch);
+}
+.algo-stmt b { font-weight: 700; }
+.algo-comment {
+  float: right;
+  clear: right;
+  margin-left: 1.6ch;
+  color: #8a857a;
+  font-size: 0.85em;
+  text-align: right;
+}
+@media (max-width: 640px) {
+  .algo-comment {
+    float: none;
+    display: block;
+    clear: both;
+    text-align: left;
+    margin-left: 0;
+  }
+}
+.bkplaceholder { border-left-color: var(--orange); color: var(--ink-soft); font-style: italic; }
+.bkproof { margin: 1.2em 0 1.6em; color: var(--ink-soft); }
+.bkproof > p:last-child::after { content: " \220E"; color: var(--gray); }
+/* citations & references */
+.citation { color: var(--ink-soft); }
+#refs { font-size: 0.9rem; line-height: 1.5; }
+#refs .csl-entry { margin-bottom: 0.6em; }
+.site-footer {
+  border-top: 1px solid var(--rule);
+  margin-top: 3rem;
+  padding: 1rem 1.2rem 2rem;
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  text-align: center;
+}
+/* math display scroll on small screens */
+mjx-container[display="true"] {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
+@media (max-width: 640px) {
+  html { font-size: 16px; }
+  .site-chapter { display: none; }
+}

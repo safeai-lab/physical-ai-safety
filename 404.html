@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex">
+<title>Physical AI Safety</title>
+<style>body{font-family:sans-serif;background:#faf9f7;color:#1a1a1a;
+display:flex;min-height:100vh;align-items:center;justify-content:center}
+a{color:#C41230}</style></head><body>
+<p id="nf" hidden>Page not found. <a href="/">Back to the homepage</a></p>
+<script>
+/* Locked visitors go to the gate; unlocked visitors get a plain 404
+   (unconditional bouncing would loop: 404 -> gate -> auto-return -> 404). */
+var k = null;
+try { k = sessionStorage.getItem("pas-key") || localStorage.getItem("pas-key"); } catch (e) {}
+if (k) { document.getElementById("nf").hidden = false; }
+else {
+  location.replace("/gate.html?return=" +
+    encodeURIComponent(location.pathname + location.search + location.hash));
+}
+</script></body></html>

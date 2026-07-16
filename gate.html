@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Physical AI Safety — Access</title>
+<style>
+  :root { --accent: #C41230; --ink: #1a1a1a; --paper: #faf9f7; --rule: #ddd8d0; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: "Source Sans 3", "Source Sans Pro", -apple-system, "Segoe UI",
+                 "PingFang SC", "Microsoft YaHei", sans-serif;
+    display: flex; min-height: 100vh; align-items: center; justify-content: center;
+  }
+  .card { width: min(30rem, 92vw); padding: 2.5rem 2.25rem; }
+  .rule { border: 0; border-top: 3px solid var(--accent); width: 3.5rem; margin: 0 0 1.25rem; }
+  h1 {
+    font-family: "STIX Two Text", Georgia, "Songti SC", serif;
+    font-size: 1.65rem; font-weight: 600; margin: 0 0 .3rem; letter-spacing: .01em;
+  }
+  .sub { color: #666; font-size: .95rem; margin: 0 0 1.75rem; }
+  label { display: block; font-size: .85rem; color: #555; margin-bottom: .4rem; }
+  .row { display: flex; gap: .6rem; }
+  input[type=password] {
+    flex: 1; font-size: 1.05rem; padding: .55rem .7rem;
+    border: 1px solid var(--rule); border-radius: 4px; background: #fff;
+    font-family: inherit;
+  }
+  input[type=password]:focus { outline: 2px solid var(--accent); border-color: var(--accent); }
+  button {
+    font-size: 1rem; padding: .55rem 1.2rem; border: 0; border-radius: 4px;
+    background: var(--accent); color: #fff; cursor: pointer; font-family: inherit;
+  }
+  button:disabled { opacity: .55; cursor: wait; }
+  .remember { margin-top: .9rem; font-size: .85rem; color: #555;
+              display: flex; align-items: center; gap: .45rem; }
+  .msg { min-height: 1.4rem; margin-top: .9rem; font-size: .9rem; }
+  .msg.err { color: var(--accent); }
+  .foot { margin-top: 2.25rem; font-size: .8rem; color: #999; line-height: 1.5; }
+  .shake { animation: shake .35s; }
+  @keyframes shake { 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <hr class="rule">
+  <h1>Physical AI Safety</h1>
+  <p class="sub">This site is passcode-protected. Enter the access code from the author.</p>
+  <form id="f">
+    <label for="pw">Passcode</label>
+    <div class="row">
+      <input type="password" id="pw" autocomplete="current-password" autofocus>
+      <button id="go" type="submit">Unlock</button>
+    </div>
+    <label class="remember">
+      <input type="checkbox" id="remember" checked>
+      Remember on this device
+    </label>
+    <p class="msg" id="msg"></p>
+  </form>
+  <p class="foot">Ding Zhao · Carnegie Mellon University<br>
+     Access implies agreement not to redistribute pre-publication content.</p>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  /* Filled by scripts/gate_encrypt.py at build time. The salt and canary
+     ciphertext are public by design; the passcode never appears anywhere. */
+  var SALT = "6tUMnbd48HLCwemUdvE3MQ==";
+  var ITER = parseInt("600000", 10);
+  var CANARY = { iv: "t3vdNdMWYe9rbdE9", data: "5w9MwBvJ/276zsNjwQyFoE2lJ4roxUQXCc1y" };
+  var CANARY_TEXT = "pas-gate-ok";
+
+  function b64d(s) {
+    var bin = atob(s), arr = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+    return arr;
+  }
+  function b64e(buf) {
+    var arr = new Uint8Array(buf), s = "";
+    for (var i = 0; i < arr.length; i++) s += String.fromCharCode(arr[i]);
+    return btoa(s);
+  }
+
+  function returnTarget() {
+    var r = new URLSearchParams(location.search).get("return") || "/";
+    /* same-origin paths only: must start with exactly one "/" */
+    return (/^\/(?!\/)/.test(r)) ? r : "/";
+  }
+
+  function deriveBits(pass) {
+    return crypto.subtle.importKey("raw", new TextEncoder().encode(pass),
+                                   "PBKDF2", false, ["deriveBits"])
+      .then(function (km) {
+        return crypto.subtle.deriveBits(
+          { name: "PBKDF2", hash: "SHA-256", salt: b64d(SALT), iterations: ITER },
+          km, 256);
+      });
+  }
+
+  function canaryOk(bits) {
+    return crypto.subtle.importKey("raw", bits, "AES-GCM", false, ["decrypt"])
+      .then(function (key) {
+        return crypto.subtle.decrypt(
+          { name: "AES-GCM", iv: b64d(CANARY.iv) }, key, b64d(CANARY.data));
+      })
+      .then(function (plain) {
+        return new TextDecoder().decode(plain) === CANARY_TEXT;
+      })
+      .catch(function () { return false; });
+  }
+
+  var f = document.getElementById("f"), pw = document.getElementById("pw"),
+      go = document.getElementById("go"), msg = document.getElementById("msg"),
+      card = document.getElementById("card"),
+      remember = document.getElementById("remember");
+
+  /* Already unlocked (valid key stored)? Skip the form. */
+  var existing = null;
+  try {
+    existing = sessionStorage.getItem("pas-key") || localStorage.getItem("pas-key");
+  } catch (e) {}
+  if (existing) {
+    canaryOk(b64d(existing).buffer).then(function (ok) {
+      if (ok) location.replace(returnTarget());
+    });
+  }
+
+  f.addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    if (!pw.value) return;
+    go.disabled = true;
+    msg.className = "msg";
+    msg.textContent = "Deriving key…";
+    deriveBits(pw.value).then(function (bits) {
+      return canaryOk(bits).then(function (ok) {
+        if (!ok) throw new Error("bad passcode");
+        var enc = b64e(bits);
+        try {
+          if (remember.checked) { localStorage.setItem("pas-key", enc); }
+          else { sessionStorage.setItem("pas-key", enc); }
+        } catch (e) {}
+        msg.textContent = "Unlocked. Redirecting…";
+        location.replace(returnTarget());
+      });
+    }).catch(function () {
+      go.disabled = false;
+      msg.className = "msg err";
+      msg.textContent = "Incorrect passcode. Please try again.";
+      card.classList.remove("shake"); void card.offsetWidth;
+      card.classList.add("shake");
+      pw.select();
+    });
+  });
+})();
+</script>
+</body>
+</html>
