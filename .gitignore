@@ -10,3 +10,5 @@ slides/*.pdf
 docs/plans/
 # Encrypted staging built by scripts/gate_encrypt.py — publish deliberately.
 deploy/
+# Uncompressed slide-deck masters (re-exportable from Keynote)
+slides/_originals/
