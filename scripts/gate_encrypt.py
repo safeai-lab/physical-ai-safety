@@ -58,7 +58,7 @@ STUB_TEMPLATE = """<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>{title}</title>
-<meta property="og:title" content="Physical AI Safety — A textbook written by Prof. Ding Zhao at CMU">
+<meta property="og:title" content="New Book: Physical AI Safety — Written by Prof. Ding Zhao at CMU">
 <meta property="og:description" content="The Gateway to Deploying AI in the Real World">
 <meta property="og:image" content="https://physical-ai-safety.org/assets/favicon-512.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
@@ -76,8 +76,8 @@ JavaScript. / 本页面需要启用 JavaScript。</p></noscript>
 
 NOT_FOUND = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex">
-<title>Physical AI Safety — A textbook written by Prof. Ding Zhao at CMU</title>
-<meta property="og:title" content="Physical AI Safety — A textbook written by Prof. Ding Zhao at CMU">
+<title>New Book: Physical AI Safety — Written by Prof. Ding Zhao at CMU</title>
+<meta property="og:title" content="New Book: Physical AI Safety — Written by Prof. Ding Zhao at CMU">
 <meta property="og:description" content="The Gateway to Deploying AI in the Real World">
 <meta property="og:image" content="https://physical-ai-safety.org/assets/favicon-512.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
@@ -132,7 +132,7 @@ def extract_title(html: str) -> str:
     """Generic title for every stub: even chapter names stay behind the gate
     (author decision: entire site, no public surface). The real <title>
     returns the moment the page decrypts."""
-    return "Physical AI Safety — A textbook written by Prof. Ding Zhao at CMU"
+    return "New Book: Physical AI Safety — Written by Prof. Ding Zhao at CMU"
 
 
 def main() -> None:
